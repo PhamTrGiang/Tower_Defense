@@ -18,6 +18,8 @@ public class WaypointManager : MonoBehaviour
 
     public Transform[] GetWaypoints() => waypoints.ToArray();
 
+
+
     private void OnDrawGizmosSelected()
     {
         waypoints.Clear();
