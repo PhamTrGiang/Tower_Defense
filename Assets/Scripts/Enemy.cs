@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour,IDamagable
 {
     private NavMeshAgent agent;
+    public int healthPoint = 4;
 
+    [Header("Movements")]
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private Transform[] waypoint;
     private int waypointIndex;
@@ -52,5 +54,13 @@ public class Enemy : MonoBehaviour
         waypointIndex++;
         return targertPoint;
 
+    }
+
+    public void TakeDame(int damage)
+    {
+        healthPoint = healthPoint - damage;
+
+        if (healthPoint <= 0)
+            Destroy(gameObject);
     }
 }
