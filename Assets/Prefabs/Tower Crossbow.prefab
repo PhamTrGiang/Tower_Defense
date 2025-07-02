@@ -47,13 +47,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d138427144242584087f98936472dcb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 2
+  currentEnemy: {fileID: 0}
+  attackCooldown: 1.2
+  enemyPriorityType: 1
   towerHead: {fileID: 7244391273310290594}
   rotationSpeed: 10
   attackRange: 3
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
+  dynamicTargetChange: 0
   damage: 10
   gunPoint: {fileID: 4546418986019382694}
 --- !u!114 &9154773733626991724
@@ -1892,6 +1895,7 @@ GameObject:
   - component: {fileID: 3293070671934960087}
   - component: {fileID: 6795954233221064753}
   - component: {fileID: 7765001863230762667}
+  - component: {fileID: 1259396082863932552}
   m_Layer: 0
   m_Name: Building_1
   m_TagString: Untagged
@@ -1967,6 +1971,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1259396082863932552
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8214877348037603636}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2606347287173655772, guid: c588e9918a4a07345a6e50a4fe69c802, type: 3}
 --- !u!1 &9104620794177877760
 GameObject:
   m_ObjectHideFlags: 0

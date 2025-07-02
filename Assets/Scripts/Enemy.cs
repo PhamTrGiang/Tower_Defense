@@ -1,15 +1,26 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour,IDamagable
+
+public enum EnemyType
+{
+    Basic,Fast,None,
+}
+
+public class Enemy : MonoBehaviour, IDamagable
 {
     private NavMeshAgent agent;
+
+    [SerializeField] private EnemyType enemyType;
+    [SerializeField] private Transform centerPoint;
     public int healthPoint = 4;
 
     [Header("Movements")]
     [SerializeField] private float turnSpeed = 10f;
-    [SerializeField] private Transform[] waypoint;
+    [SerializeField] private Transform[] waypoints;
+
     private int waypointIndex;
+    private float totalDistance;
 
     private void Awake()
     {
@@ -20,7 +31,8 @@ public class Enemy : MonoBehaviour,IDamagable
 
     private void Start()
     {
-        waypoint = WaypointManager.Instance.GetWaypoints();
+        waypoints = WaypointManager.Instance.GetWaypoints();
+        CollectTotalDistance();
     }
 
     private void Update()
@@ -30,6 +42,17 @@ public class Enemy : MonoBehaviour,IDamagable
         if (agent.remainingDistance < .5f)
         {
             agent.SetDestination(GetNextWaypoint());
+        }
+    }
+
+    public float DistanceAToFinishLine() => totalDistance + agent.remainingDistance;
+
+    private void CollectTotalDistance()
+    {
+        for (int i = 0; i < waypoints.Length - 1; i++)
+        {
+            float distance = Vector3.Distance(waypoints[i].position, waypoints[i + 1].position);
+            totalDistance += distance;
         }
     }
 
@@ -48,13 +71,24 @@ public class Enemy : MonoBehaviour,IDamagable
 
     private Vector3 GetNextWaypoint()
     {
-        if (waypointIndex >= waypoint.Length)
+        if (waypointIndex >= waypoints.Length)
             return transform.position;
-        Vector3 targertPoint = waypoint[waypointIndex].position;
+        Vector3 targertPoint = waypoints[waypointIndex].position;
+
+        if (waypointIndex > 0)
+        {
+            float distance = Vector3.Distance(waypoints[waypointIndex].position, waypoints[waypointIndex - 1].position);
+            totalDistance -= distance;
+        }
+
         waypointIndex++;
         return targertPoint;
 
     }
+
+    public Vector3 CenterPoint() => centerPoint.position;
+
+    public EnemyType GetEnemyType() => enemyType;
 
     public void TakeDame(int damage)
     {

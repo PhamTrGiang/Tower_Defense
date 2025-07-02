@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CrossbowVisuals : MonoBehaviour
 {
-    private TowerCrossbow myTower;
+    private Enemy myEnemy;
 
     [SerializeField] private LineRenderer attackVisuals;
     [SerializeField] private float attackVisualsDuration = 0.1f;
@@ -47,12 +47,10 @@ public class CrossbowVisuals : MonoBehaviour
 
     private void Awake()
     {
-        myTower = GetComponent<TowerCrossbow>();
         material = new Material(meshRenderer.material);
         meshRenderer.material = material;
         
         UpdateMaterialOnLineRenderer();
-
         StartCoroutine(ChangeEmission(1));
     }
 
@@ -68,6 +66,15 @@ public class CrossbowVisuals : MonoBehaviour
     {
         UpdateEmisionColor();
         UpdateStrings();
+        UpdateAttackVisualsIfNeeded();
+    }
+
+    private void UpdateAttackVisualsIfNeeded()
+    {
+        if (attackVisuals.enabled && myEnemy != null)
+        {
+            attackVisuals.SetPosition(1, myEnemy.CenterPoint());
+        }
     }
 
     private void UpdateStrings()
@@ -87,7 +94,7 @@ public class CrossbowVisuals : MonoBehaviour
         material.SetColor("_EmissionColor", emissionColor);
     }
 
-    public void PlayReloadFX(float duration)
+    public void PlayReloadVFX(float duration)
     {
         float newDuration = duration / 2;
 
@@ -96,24 +103,21 @@ public class CrossbowVisuals : MonoBehaviour
 
     }
 
-    public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint)
+    public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint, Enemy newEnemy)
     {
-        StartCoroutine(VFXCoroutine(startPoint, endPoint));
+        StartCoroutine(VFXCoroutine(startPoint, endPoint,newEnemy));
     }
 
-    private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint)
+    private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint,Enemy newEnemy)
     {
-        myTower.EnableRotation(false);
+        myEnemy = newEnemy;
 
         attackVisuals.enabled = true;
         attackVisuals.SetPosition(0, startPoint);
         attackVisuals.SetPosition(1, endPoint);
 
         yield return new WaitForSeconds(attackVisualsDuration);
-
         attackVisuals.enabled = false;
-
-        myTower.EnableRotation(true);
     }
 
     private IEnumerator ChangeEmission(float duration)
