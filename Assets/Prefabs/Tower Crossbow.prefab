@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentEnemy: {fileID: 0}
   attackCooldown: 1.2
-  enemyPriorityType: 1
+  enemyPriorityType: 2
   towerHead: {fileID: 7244391273310290594}
   rotationSpeed: 10
   attackRange: 3

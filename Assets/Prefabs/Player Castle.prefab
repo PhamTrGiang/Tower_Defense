@@ -2587,6 +2587,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5185418611645613933}
+  - component: {fileID: 2410828097220289393}
+  - component: {fileID: 1109243120907297987}
   m_Layer: 0
   m_Name: Player Castle
   m_TagString: Untagged
@@ -2610,6 +2612,39 @@ Transform:
   - {fileID: 7663711379109541804}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2410828097220289393
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872781603634998429}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.25, y: 1, z: 2.25}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1109243120907297987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872781603634998429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08d1f7de98cdfed408f4df943a4b0fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9105600679621016857
 GameObject:
   m_ObjectHideFlags: 0

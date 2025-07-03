@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4285622172988050952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7173302603571217891}
+  - component: {fileID: 3680740145074456181}
+  - component: {fileID: 2847494985217708716}
+  - component: {fileID: 7077688178496022882}
+  m_Layer: 0
+  m_Name: Grid Builder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7173302603571217891
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4285622172988050952}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3680740145074456181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4285622172988050952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adecd0b8d019d6c4cab28a5c290293d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainPrefab: {fileID: 8781178361403821192, guid: d9a35fd3e8942a04b8914fe69401b5f6, type: 3}
+  gridLength: 7
+  gridWidth: 7
+  createdTiles: []
+--- !u!114 &2847494985217708716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4285622172988050952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9536e21bba0eac141a4e052903bea676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileRoad: {fileID: 11879386042121100, guid: ff341c3f174c9e94b8a0c69bd1b05638, type: 3}
+  tileField: {fileID: 8781178361403821192, guid: d9a35fd3e8942a04b8914fe69401b5f6, type: 3}
+  tileSideway: {fileID: 3827289260373349368, guid: 62cb7c135df40e041bac13871299abbb, type: 3}
+  tileInnerCorner: {fileID: 1281855499295524273, guid: f36ed7f93c1df0948b552f5d8262d7c9, type: 3}
+  tileInnerCornerSmall: {fileID: 960648172374055320, guid: 05c4d3ebc033d824697356b2e1a8e8e3, type: 3}
+  tileOuterCorner: {fileID: 6435739405786764080, guid: 457b2929ee3af264781cef88cc8ff531, type: 3}
+  tileOuterCornerSmall: {fileID: 2502665416057739659, guid: 02a10a75416f27d40a8375315fe37230, type: 3}
+  tileHill_1: {fileID: 2108546276881204648, guid: cd2d26563fcac4d40b05ff80e0955e27, type: 3}
+  tileHill_2: {fileID: 8237198900063731354, guid: a5fe71448fedbe14aa12aa179e9c76c2, type: 3}
+  tileHill_3: {fileID: 7929458741197646306, guid: 5344b7b8af3afdb4ab77b2ec5519d5b8, type: 3}
+  tileBridgeField: {fileID: 7640480702250480300, guid: 71bd8d792bef2b84085503f6af849fd7, type: 3}
+  tileBridgeRoad: {fileID: 5286537272914192723, guid: f82718e0418848b40b610b81f1b3c142, type: 3}
+  tileBridgeSiteway: {fileID: 5265907250782263645, guid: 06ea483aa8ecc7442be56a9a91a1e87b, type: 3}
+--- !u!114 &7077688178496022882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4285622172988050952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.05
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
