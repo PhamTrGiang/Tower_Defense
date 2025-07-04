@@ -1,14 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
 public enum EnemyType
 {
-    Basic,Fast,None,
+    Basic, Fast, None,
 }
 
 public class Enemy : MonoBehaviour, IDamagable
 {
+    private EnemyPortal myPortal;
     private NavMeshAgent agent;
 
     [SerializeField] private EnemyType enemyType;
@@ -17,9 +18,11 @@ public class Enemy : MonoBehaviour, IDamagable
 
     [Header("Movements")]
     [SerializeField] private float turnSpeed = 10f;
-    [SerializeField] private Transform[] waypoints;
 
-    private int waypointIndex;
+    [SerializeField] private List<Transform> myWaypoints;
+    private int nextWaypointIndex;
+    private int currentWaypointIndex;
+
     private float totalDistance;
 
     private void Awake()
@@ -29,29 +32,52 @@ public class Enemy : MonoBehaviour, IDamagable
         agent.avoidancePriority = Mathf.RoundToInt(agent.speed * 10);
     }
 
-    private void Start()
+    public void SetupEnemy(List<Waypoint> newWaypoint, EnemyPortal myNewPotal)
     {
-        waypoints = WaypointManager.Instance.GetWaypoints();
-        CollectTotalDistance();
+        myWaypoints = new List<Transform>();
+
+        foreach (var point in newWaypoint)
+        {
+            myWaypoints.Add(point.transform);
+        }
+
+        myPortal = myNewPotal;
     }
 
     private void Update()
     {
         FaceTarget(agent.steeringTarget);
 
-        if (agent.remainingDistance < .5f)
+        if (ShouldChangeWaypoint())
         {
             agent.SetDestination(GetNextWaypoint());
         }
+
+        CollectTotalDistance();
+    }
+
+    private bool ShouldChangeWaypoint()
+    {
+        if (nextWaypointIndex >= myWaypoints.Count) return false;
+
+        if (agent.remainingDistance < .5f) return true;
+
+        Vector3 currentWaypoint = myWaypoints[currentWaypointIndex].position;
+        Vector3 nextWayporint = myWaypoints[nextWaypointIndex].position;
+
+        float distanceToNextWaypoint = Vector3.Distance(transform.position, nextWayporint);
+        float distanceToBeetwenPoints = Vector3.Distance(currentWaypoint, nextWayporint);
+
+        return distanceToBeetwenPoints > distanceToNextWaypoint;
     }
 
     public float DistanceAToFinishLine() => totalDistance + agent.remainingDistance;
 
     private void CollectTotalDistance()
     {
-        for (int i = 0; i < waypoints.Length - 1; i++)
+        for (int i = 0; i < myWaypoints.Count - 1; i++)
         {
-            float distance = Vector3.Distance(waypoints[i].position, waypoints[i + 1].position);
+            float distance = Vector3.Distance(myWaypoints[i].position, myWaypoints[i + 1].position);
             totalDistance += distance;
         }
     }
@@ -71,17 +97,18 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private Vector3 GetNextWaypoint()
     {
-        if (waypointIndex >= waypoints.Length)
+        if (nextWaypointIndex >= myWaypoints.Count)
             return transform.position;
-        Vector3 targertPoint = waypoints[waypointIndex].position;
+        Vector3 targertPoint = myWaypoints[nextWaypointIndex].position;
 
-        if (waypointIndex > 0)
+        if (nextWaypointIndex > 0)
         {
-            float distance = Vector3.Distance(waypoints[waypointIndex].position, waypoints[waypointIndex - 1].position);
+            float distance = Vector3.Distance(myWaypoints[nextWaypointIndex].position, myWaypoints[nextWaypointIndex - 1].position);
             totalDistance -= distance;
         }
 
-        waypointIndex++;
+        nextWaypointIndex++;
+        currentWaypointIndex = nextWaypointIndex - 1;
         return targertPoint;
 
     }
@@ -95,6 +122,12 @@ public class Enemy : MonoBehaviour, IDamagable
         healthPoint = healthPoint - damage;
 
         if (healthPoint <= 0)
-            Destroy(gameObject);
+            Die();
+    }
+
+    private void Die()
+    {
+        myPortal.RemoveActiveEnemy(gameObject);
+        Destroy(gameObject);
     }
 }

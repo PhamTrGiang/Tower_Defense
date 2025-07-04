@@ -7,7 +7,7 @@ public class Castle : MonoBehaviour
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy)
         {
-            Destroy(enemy.gameObject);
+            other.GetComponent<Enemy>().TakeDame(9999);
         }
     }
 }
