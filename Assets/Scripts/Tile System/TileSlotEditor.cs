@@ -4,7 +4,6 @@ using UnityEditor;
 [CustomEditor(typeof(TileSlot)), CanEditMultipleObjects]
 public class TileSlotEditor : Editor
 {
-
     private GUIStyle centeredStyle;
 
     public override void OnInspectorGUI()
@@ -232,3 +231,4 @@ public class TileSlotEditor : Editor
 
     }
 }
+
