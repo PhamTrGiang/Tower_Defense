@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 564cbc1389ffa554bb63deef3527998b
+guid: b08a175140786d848803e4a51b726c61
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -34,16 +34,16 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 1
-    wrapV: 1
+    wrapU: 0
+    wrapV: 0
     wrapW: 0
-  nPOTScale: 0
+  nPOTScale: 1
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -52,9 +52,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 1
+  alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 0
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -95,34 +95,12 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: 1_24
-      rect:
-        serializedVersion: 2
-        x: 45
-        y: 737
-        width: 688
-        height: 313
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 8, y: 7, z: 8, w: 7}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 83548a0a07f012a4c87ef2a012be4d0b
-      internalID: -1165455851
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5814d9fc87321124ba599f739a4f7051
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -131,32 +109,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      1_0: -505005458
-      1_1: 1711789569
-      1_10: 1303215326
-      1_11: 97627031
-      1_12: 1159237872
-      1_13: -376982259
-      1_14: -340834642
-      1_15: 1045325930
-      1_16: -459991160
-      1_17: -943316085
-      1_18: 1473423124
-      1_19: 1111623911
-      1_2: -1282470449
-      1_20: -1059502176
-      1_21: -1885381667
-      1_22: -358239662
-      1_23: 859724028
-      1_24: -1165455851
-      1_3: 868934996
-      1_4: 875431974
-      1_5: -1928841234
-      1_6: 1995829899
-      1_7: 1408565184
-      1_8: -1812956993
-      1_9: -869923712
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
