@@ -12,6 +12,7 @@ public class WaveDetails
 
 public class WaveManager : MonoBehaviour
 {
+    private UI_InGame inGameUI;
     [SerializeField] private GridBuilder currentGrid;
     public bool waveCompleted;
 
@@ -32,6 +33,7 @@ public class WaveManager : MonoBehaviour
     private void Awake()
     {
         enemyPortals = new List<EnemyPortal>(FindObjectsByType<EnemyPortal>(FindObjectsSortMode.None));
+        inGameUI = FindFirstObjectByType<UI_InGame>(FindObjectsInactive.Include);
     }
     private void Start()
     {
@@ -54,6 +56,8 @@ public class WaveManager : MonoBehaviour
 
             waveCompleted = true;
             waveTimer = timeBetweenWaves;
+            inGameUI.EnebleWaveTimer(true);
+
 
         }
     }
@@ -63,9 +67,11 @@ public class WaveManager : MonoBehaviour
         if (waveCompleted)
         {
             waveTimer -= Time.deltaTime;
+            inGameUI.UpdateWaveTimerUI(waveTimer);
 
             if (waveTimer <= 0)
             {
+                inGameUI.EnebleWaveTimer(false);
                 SetupNextWave();
             }
         }
@@ -78,6 +84,8 @@ public class WaveManager : MonoBehaviour
             Debug.LogWarning("Can't force while there is enemies in the game!");
             return;
         }
+
+        inGameUI.EnebleWaveTimer(false);
 
         SetupNextWave();
     }

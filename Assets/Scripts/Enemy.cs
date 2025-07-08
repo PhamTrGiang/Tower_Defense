@@ -9,6 +9,7 @@ public enum EnemyType
 
 public class Enemy : MonoBehaviour, IDamagable
 {
+    private GameManager gameManager;
     private EnemyPortal myPortal;
     private NavMeshAgent agent;
 
@@ -30,6 +31,8 @@ public class Enemy : MonoBehaviour, IDamagable
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.avoidancePriority = Mathf.RoundToInt(agent.speed * 10);
+
+        gameManager = FindFirstObjectByType<GameManager>();
     }
 
     public void SetupEnemy(List<Waypoint> newWaypoint, EnemyPortal myNewPotal)
@@ -126,6 +129,13 @@ public class Enemy : MonoBehaviour, IDamagable
     }
 
     private void Die()
+    {
+        myPortal.RemoveActiveEnemy(gameObject);
+        gameManager.UpdateCurrency(1);
+        Destroy(gameObject);
+    }
+
+    public void DestroyEnemy()
     {
         myPortal.RemoveActiveEnemy(gameObject);
         Destroy(gameObject);

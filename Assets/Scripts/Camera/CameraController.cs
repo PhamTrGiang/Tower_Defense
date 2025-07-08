@@ -60,6 +60,8 @@ public class CameraController : MonoBehaviour
 
     public void EnebleCameraControllers(bool enable) => canControll = enable;
     public float AdjustPitchValue(float value) => pitch = value;
+    public float AdjustKeyboardSensetivity(float value) => movementSpeed = value;
+    public float AdjustMouseSensetivity(float value) => mouseMovementSpeed = value;
 
     private void HandleZoom()
     {
@@ -131,8 +133,6 @@ public class CameraController : MonoBehaviour
 
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref movementVelocity, smoothTime);
     }
-
-    
 
     private void HandleMouseMovement()
     { 
