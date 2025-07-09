@@ -32,4 +32,16 @@ public class GameManager : MonoBehaviour
         currency += value;
         inGameUI.UpdateCurrencyUI(currency);
     }
+
+    public bool HasEnoughtCurrency(int price)
+    {
+        if (price <= currency)
+        {
+            currency -= price;
+            inGameUI.UpdateCurrencyUI(currency);
+            return true;
+        }
+
+        return false; 
+    }
 }

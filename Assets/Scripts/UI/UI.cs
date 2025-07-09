@@ -12,8 +12,12 @@ public class UI : MonoBehaviour
     private UI_MainMenu uiMainMenu;
     private UI_InGame uiInGame;
 
+    public UI_BuildButtonsHolder buildButtonsUI { get; private set; }
+
     private void Awake()
     {
+        buildButtonsUI = GetComponentInChildren<UI_BuildButtonsHolder>(true);
+
         uiSetting = GetComponentInChildren<UI_Setting>(true);
         uiMainMenu = GetComponentInChildren<UI_MainMenu>(true);
         uiInGame = GetComponentInChildren<UI_InGame>(true);

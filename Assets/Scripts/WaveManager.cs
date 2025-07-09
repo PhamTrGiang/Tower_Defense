@@ -46,6 +46,7 @@ public class WaveManager : MonoBehaviour
         HandleWaveTiming();
     }
 
+    public WaveDetails[] GetLevelWaves() => levelWaves;
     private void HandleWaveCompletion()
     {
         if (ReadyToCheck() == false) return;
