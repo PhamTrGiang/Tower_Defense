@@ -10,6 +10,12 @@ public class BuildManager : MonoBehaviour
     public WaveManager waveManager;
     public GridBuilder currentGrid;
 
+    [Header("Build Materials")]
+    [SerializeField] private Material attackRadiusMat;
+    [SerializeField] private Material buildPreviewMat;
+
+    private bool isMouseOverUI;
+
     private void Awake()
     {
         ui = FindFirstObjectByType<UI>();
@@ -24,15 +30,20 @@ public class BuildManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-            {
-                bool clickNotOnBuildSlot = hit.collider.GetComponent<BuildSlot>() == null;
+            if (isMouseOverUI)
+                return;
 
-                if (clickNotOnBuildSlot)
-                    CancelBuildAction();
-            }
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+                {
+                    bool clickNotOnBuildSlot = hit.collider.GetComponent<BuildSlot>() == null;
+
+                    if (clickNotOnBuildSlot)
+                        CancelBuildAction();
+                }
         }
     }
+
+    public void MouseOverUI(bool isOverUI) => isMouseOverUI = isOverUI;
 
     public void MakeBuildSlotNotAvalibleIfNeeded(WaveManager waveManager, GridBuilder currentGrid)
     {
@@ -73,6 +84,8 @@ public class BuildManager : MonoBehaviour
         if (selectedBuildSlot == null)
             return;
 
+        ui.buildButtonsUI.GetLastSelected()?.SelectButton(false);
+
         selectedBuildSlot.UnselectTile();
         selectedBuildSlot = null;
         DisableMenu();
@@ -101,4 +114,6 @@ public class BuildManager : MonoBehaviour
     }
 
     public BuildSlot GetSelectedSlot() => selectedBuildSlot;
+    public Material GetAttackRadiusMat() => attackRadiusMat;
+    public Material GetBuildPreviewMat() => buildPreviewMat;
 }

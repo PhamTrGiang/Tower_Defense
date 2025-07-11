@@ -7,10 +7,11 @@ public class UI : MonoBehaviour
     [SerializeField] private Image fadeImageUI;
     [SerializeField] private GameObject[] uiElements;
 
-    private UI_Animator uiAnimator;
     private UI_Setting uiSetting;
     private UI_MainMenu uiMainMenu;
-    private UI_InGame uiInGame;
+
+    public UI_InGame uiInGame { get; private set; }
+    public UI_Animator uiAnimator { get; private set; }
 
     public UI_BuildButtonsHolder buildButtonsUI { get; private set; }
 

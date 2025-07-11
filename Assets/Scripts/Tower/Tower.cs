@@ -44,6 +44,8 @@ public abstract class Tower : MonoBehaviour
 
         RotateTowardsEnemy();
     }
+    
+    public float GetAttackRange() => attackRange;
 
     private void LooseTargetIfNeeded()
     {

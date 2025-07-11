@@ -4,6 +4,50 @@ using UnityEngine.UI;
 
 public class UI_Animator : MonoBehaviour
 {
+    [Header("UI Feedback - Shake Effect")]
+    [SerializeField] private float shakeMagnitude;
+    [SerializeField] private float shakeDuration;
+    [SerializeField] private float shakeRotationMagnitude;
+    [Space]
+    [SerializeField] private float defaultUIScale = 1.5f;
+    [SerializeField] private bool scaleChangeAvailible;
+
+    public void Shake(Transform transformToShake)
+    {
+        RectTransform rectTransform = transformToShake.GetComponent<RectTransform>();
+        StartCoroutine(ShakeCO(rectTransform));
+    }
+
+    private IEnumerator ShakeCO(RectTransform rectTransform)
+    {
+        float time = 0;
+        Vector3 originalPosition = rectTransform.anchoredPosition;
+        float currentScale = rectTransform.localScale.x;
+
+        if (scaleChangeAvailible)
+            StartCoroutine(ChangeScaleCo(rectTransform, currentScale * 1.1f, shakeDuration / 2));
+
+        while (time < shakeDuration)
+        {
+            float xOffset = Random.Range(-shakeMagnitude, shakeMagnitude);
+            float yOffset = Random.Range(-shakeMagnitude, shakeMagnitude);
+            float randomRotation = Random.Range(-shakeRotationMagnitude, shakeRotationMagnitude);
+
+            rectTransform.anchoredPosition = originalPosition + new Vector3(xOffset, yOffset);
+            rectTransform.localRotation = Quaternion.Euler(0, 0, randomRotation);
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        rectTransform.anchoredPosition = originalPosition;
+        rectTransform.localRotation = Quaternion.Euler(Vector3.zero);
+
+        if (scaleChangeAvailible)
+            StartCoroutine(ChangeScaleCo(rectTransform, defaultUIScale, shakeDuration / 2));
+
+    }
+
     public void ChangePosition(Transform transform, Vector3 offset, float duration = .1f)
     {
         RectTransform rectTransform = transform.GetComponent<RectTransform>();
@@ -53,7 +97,7 @@ public class UI_Animator : MonoBehaviour
 
     public void ChangeColor(Image image, float targetAlpha, float duration)
     {
-        StartCoroutine(ChangeColorCo(image,targetAlpha,duration));
+        StartCoroutine(ChangeColorCo(image, targetAlpha, duration));
     }
 
     private IEnumerator ChangeColorCo(Image image, float targetAlpha, float duration)
