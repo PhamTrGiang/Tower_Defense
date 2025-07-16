@@ -14,11 +14,24 @@ public class UI_InGame : MonoBehaviour
     [SerializeField] private float waveTimerOffset;
     [SerializeField] private UI_TextBlinkEffect waveTimerTimerTextBlinkEffect;
 
+    [SerializeField] private Transform waveTimer;
+    private Coroutine waveTimerMoveCo;
+    private Vector3 waveTimerDefaultPosition;
+
+    [Header("Victory & Defeat")]
+    [SerializeField] private GameObject victoryUI;
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject levelCompletedUI;
+
+
     private void Awake()
     {
         uiAnimator = GetComponentInParent<UI_Animator>();
         ui = GetComponentInParent<UI>();
         uiPause = ui.GetComponentInChildren<UI_Pause>(true);
+
+        if (waveTimer != null)
+            waveTimerDefaultPosition = waveTimer.localPosition;
     }
 
     private void Update()
@@ -27,8 +40,26 @@ public class UI_InGame : MonoBehaviour
             ui.SwitchTo(uiPause.gameObject);
     }
 
-    public void ShakeCurrencyUI() => ui.uiAnimator.Shake(currencyText.transform.parent);
-    public void ShakeHealthUI() => ui.uiAnimator.Shake(healthPointsText.transform.parent);
+    public void EnableGameOverUI(bool enable)
+    {
+        if (gameOverUI != null)
+            gameOverUI.SetActive(enable);
+    }
+
+    public void EnableVictoryUI(bool enable)
+    {
+        if (victoryUI != null)
+            victoryUI.SetActive(enable);
+    }
+
+    public void LevelCompletedUI(bool enable)
+    {
+        if (levelCompletedUI != null)
+            levelCompletedUI.SetActive(enable);
+    }
+
+    public void ShakeCurrencyUI() => ui.uiAnim.Shake(currencyText.transform.parent);
+    public void ShakeHealthUI() => ui.uiAnim.Shake(healthPointsText.transform.parent);
 
     public void UpdateHealthPointsUI(int value, int maxValue)
     {
@@ -41,21 +72,32 @@ public class UI_InGame : MonoBehaviour
     }
 
     public void UpdateWaveTimerUI(float value) => waveTimerText.text = "seconds: " + value.ToString("00");
-    public void EnebleWaveTimer(bool enable)
+    public void EnableWaveTimer(bool enable)
     {
-        Transform waveTimerTransform = waveTimerText.transform.parent;
-
+        RectTransform rect = waveTimer.GetComponent<RectTransform>();
         float yOffset = enable ? waveTimerOffset : -waveTimerOffset;
+
         Vector3 offset = new Vector3(0, yOffset);
 
-        uiAnimator.ChangePosition(waveTimerTransform, offset);
+        waveTimerMoveCo = StartCoroutine(uiAnimator.ChangePositionCo(rect, offset));
         waveTimerTimerTextBlinkEffect.EnableBlink(enable);
-        //waveTimerText.transform.parent.gameObject.SetActive(enable);
+    }
+
+    public bool SnapTimerToDefaultPosition()
+    {
+        if (waveTimer == null)
+            return false;
+
+        if (waveTimerMoveCo != null)
+            StopCoroutine(waveTimerMoveCo);
+
+        waveTimer.localPosition = waveTimerDefaultPosition;
+        return true;
     }
 
     public void ForceWaveButton()
     {
         WaveManager waveManager = FindFirstObjectByType<WaveManager>();
-        waveManager.ForceNextWave();
+        waveManager.StartNewWave();
     }
 }

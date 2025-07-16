@@ -47,7 +47,7 @@ public class TileSlot : MonoBehaviour
         return children;
     }
 
-    private void TurnIntoBuildSlotIfNeeded(GameObject refereneTile)
+    public void TurnIntoBuildSlotIfNeeded(GameObject refereneTile)
     {
         BuildSlot buildSlot = GetComponent<BuildSlot>();
 

@@ -7,38 +7,61 @@ public class UI : MonoBehaviour
     [SerializeField] private Image fadeImageUI;
     [SerializeField] private GameObject[] uiElements;
 
-    private UI_Setting uiSetting;
-    private UI_MainMenu uiMainMenu;
+    private UI_Setting settingsUI;
+    private UI_MainMenu mainMenuUI;
 
-    public UI_InGame uiInGame { get; private set; }
-    public UI_Animator uiAnimator { get; private set; }
 
+    public UI_InGame inGameUI { get; private set; }
+    public UI_Animator uiAnim { get; private set; }
     public UI_BuildButtonsHolder buildButtonsUI { get; private set; }
 
     private void Awake()
     {
         buildButtonsUI = GetComponentInChildren<UI_BuildButtonsHolder>(true);
-
-        uiSetting = GetComponentInChildren<UI_Setting>(true);
-        uiMainMenu = GetComponentInChildren<UI_MainMenu>(true);
-        uiInGame = GetComponentInChildren<UI_InGame>(true);
-        uiAnimator = GetComponent<UI_Animator>();
+        settingsUI = GetComponentInChildren<UI_Setting>(true);
+        mainMenuUI = GetComponentInChildren<UI_MainMenu>(true);
+        inGameUI = GetComponentInChildren<UI_InGame>(true);
+        uiAnim = GetComponent<UI_Animator>();
 
         //ActivateFadeEffect(true);
 
-        SwitchTo(uiSetting.gameObject);
-        //SwitchTo(uiMainMenu.gameObject);
-        SwitchTo(uiInGame.gameObject);
+        SwitchTo(settingsUI.gameObject);
+        SwitchTo(mainMenuUI.gameObject);
+        //SwitchTo(inGameUI.gameObject);
     }
 
-    public void SwitchTo(GameObject uiEneble)
+
+    public void SwitchTo(GameObject uiToEnable)
     {
         foreach (GameObject ui in uiElements)
         {
             ui.SetActive(false);
         }
 
-        uiEneble.SetActive(true);
+        if (uiToEnable != null)
+            uiToEnable.SetActive(true);
+    }
+
+    public void EnableMainMenuUI(bool enable)
+    {
+        if (enable)
+        {
+            SwitchTo(mainMenuUI.gameObject);
+        }
+        else
+            SwitchTo(null);
+
+    }
+
+    public void EnableInGameUI(bool enable)
+    {
+        if (enable)
+            SwitchTo(inGameUI.gameObject);
+        else
+        {
+            inGameUI.SnapTimerToDefaultPosition();
+            SwitchTo(null);
+        }
     }
 
     public void QuitButton()
@@ -49,12 +72,11 @@ public class UI : MonoBehaviour
             Application.Quit();
     }
 
-    public void ActivateFadeEffect(bool faceIn)
+    public void ActivateFadeEffect(bool fadeIn)
     {
-        if (faceIn)
-            uiAnimator.ChangeColor(fadeImageUI, 0, 1);
+        if (fadeIn)
+            uiAnim.ChangeColor(fadeImageUI, 0, 0);
         else
-            uiAnimator.ChangeColor(fadeImageUI, 1, 1);
-
+            uiAnim.ChangeColor(fadeImageUI, 1, 0);
     }
 }

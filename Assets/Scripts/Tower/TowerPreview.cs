@@ -1,4 +1,3 @@
-using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,18 +11,18 @@ public class TowerPreview : MonoBehaviour
 
     private void Awake()
     {
+        attackRadiusDisplay = transform.AddComponent<TowerAttackRadirusDisplay>();
         meshRenderers = GetComponentsInChildren<MeshRenderer>();
         myTower = GetComponent<Tower>();
-        attackRadiusDisplay = transform.AddComponent<TowerAttackRadirusDisplay>();
         attackRange = myTower.GetAttackRange();
 
         MakeAllMeshTransperent();
         DestroyExtraComponents();
     }
 
-    public void ShowPreview(bool showPreview, Vector3 position)
+    public void ShowPreview(bool showPreview, Vector3 previewPosition)
     {
-        transform.position = position;
+        transform.position = previewPosition;
         attackRadiusDisplay.CreateCircle(showPreview,attackRange);
     }
 

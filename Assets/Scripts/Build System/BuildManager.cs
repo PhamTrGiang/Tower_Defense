@@ -84,7 +84,7 @@ public class BuildManager : MonoBehaviour
         if (selectedBuildSlot == null)
             return;
 
-        ui.buildButtonsUI.GetLastSelected()?.SelectButton(false);
+        ui.buildButtonsUI.GetLastSelectedButton()?.SelectButton(false);
 
         selectedBuildSlot.UnselectTile();
         selectedBuildSlot = null;

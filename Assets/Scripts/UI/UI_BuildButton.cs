@@ -59,7 +59,7 @@ public class UI_BuildButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         towerPreview.gameObject.SetActive(select);
         towerPreview.ShowPreview(select, previewPosition);
-        onHoverEffect.ShowCaseButton(select);
+        onHoverEffect.ShowcaseButton(select);
         buildButtonsHolder.SetLastSelected(this);
     }
 
@@ -76,7 +76,7 @@ public class UI_BuildButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (gameManager.HasEnoughtCurrency(towerPrice) == false)
         {
-            ui.uiInGame.ShakeCurrencyUI();
+            ui.inGameUI.ShakeCurrencyUI();
             return;
         }
 
@@ -86,7 +86,7 @@ public class UI_BuildButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             return;
         }
 
-        if (ui.buildButtonsUI.GetLastSelected() == null)
+        if (ui.buildButtonsUI.GetLastSelectedButton() == null)
             return;
 
         BuildSlot slotToUse = buildManager.GetSelectedSlot();

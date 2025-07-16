@@ -16,6 +16,19 @@ public class GridBuilder : MonoBehaviour
 
     public void UpdateNavMesh() => MyNavMesh.BuildNavMesh();
 
+    private bool hadFiestLoad;
+
+    public bool IsOnFirstLoad()
+    {
+        if (hadFiestLoad == false)
+        {
+            hadFiestLoad = true;
+            return true;
+        }
+
+        return false;
+    }
+
     [ContextMenu("Build Grid")]
     private void BuildGrid()
     {
@@ -47,5 +60,7 @@ public class GridBuilder : MonoBehaviour
         GameObject newTile = Instantiate(mainPrefab, newPosition, Quaternion.identity, transform);
 
         createdTiles.Add(newTile);
+
+        newTile.GetComponent<TileSlot>().TurnIntoBuildSlotIfNeeded(mainPrefab);
     }
 }
