@@ -100,4 +100,9 @@ public class LevelButtonTile : MonoBehaviour, IPointerDownHandler, IPointerEnter
         if (myText != null)
             myText.text = "Level " + levelIndex;
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        OnValidate();
+    }
 }

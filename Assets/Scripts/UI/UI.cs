@@ -15,6 +15,10 @@ public class UI : MonoBehaviour
     public UI_Animator uiAnim { get; private set; }
     public UI_BuildButtonsHolder buildButtonsUI { get; private set; }
 
+    [Header("UI SFX")]
+    public AudioSource onHoverSfx;
+    public AudioSource onClickSfx;
+
     private void Awake()
     {
         buildButtonsUI = GetComponentInChildren<UI_BuildButtonsHolder>(true);
@@ -24,7 +28,6 @@ public class UI : MonoBehaviour
         uiAnim = GetComponent<UI_Animator>();
 
         //ActivateFadeEffect(true);
-
         SwitchTo(settingsUI.gameObject);
         SwitchTo(mainMenuUI.gameObject);
         //SwitchTo(inGameUI.gameObject);

@@ -23,6 +23,9 @@ public abstract class Tower : MonoBehaviour
     private float targetCheckInterval = .1f;
     private float lastTimeCheckedTarget = .1f;
 
+    [Header("SFX Details")]
+    [SerializeField] protected AudioSource attacksSfx;
+
     protected virtual void Awake()
     {
         EnableRotation(true);

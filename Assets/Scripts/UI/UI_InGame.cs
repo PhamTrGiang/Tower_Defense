@@ -83,16 +83,15 @@ public class UI_InGame : MonoBehaviour
         waveTimerTimerTextBlinkEffect.EnableBlink(enable);
     }
 
-    public bool SnapTimerToDefaultPosition()
+    public void SnapTimerToDefaultPosition()
     {
         if (waveTimer == null)
-            return false;
+            return;
 
         if (waveTimerMoveCo != null)
             StopCoroutine(waveTimerMoveCo);
 
         waveTimer.localPosition = waveTimerDefaultPosition;
-        return true;
     }
 
     public void ForceWaveButton()

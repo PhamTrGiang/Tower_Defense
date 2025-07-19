@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class UI_Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
+    private UI ui;
     private UI_Animator uiAnim;
     private RectTransform myRect;
 
@@ -17,16 +18,19 @@ public class UI_Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     private void Awake()
     {
+        ui = GetComponentInParent<UI>();
         uiAnim = GetComponentInParent<UI_Animator>();
         myRect = GetComponent<RectTransform>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(scaleCoroutine != null)
+        if (scaleCoroutine != null)
             StopCoroutine(scaleCoroutine);
 
-        scaleCoroutine = StartCoroutine(uiAnim.ChangeScaleCo(myRect,showcaseScale,scaleUpDuration));
+        AudioManager.Instance?.PlaySFX(ui.onHoverSfx);
+
+        scaleCoroutine = StartCoroutine(uiAnim.ChangeScaleCo(myRect, showcaseScale, scaleUpDuration));
 
         if (myTextBlinkEffect != null)
             myTextBlinkEffect.EnableBlink(false);
@@ -34,17 +38,19 @@ public class UI_Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(scaleCoroutine != null)
+        if (scaleCoroutine != null)
             StopCoroutine(scaleCoroutine);
 
-        scaleCoroutine = StartCoroutine(uiAnim.ChangeScaleCo(myRect,1,scaleUpDuration));
+        scaleCoroutine = StartCoroutine(uiAnim.ChangeScaleCo(myRect, 1, scaleUpDuration));
 
-        if(myTextBlinkEffect != null)
+        if (myTextBlinkEffect != null)
             myTextBlinkEffect.EnableBlink(true);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        AudioManager.Instance?.PlaySFX(ui.onClickSfx);
+
         myRect.localScale = new Vector3(1, 1, 1);
     }
 }

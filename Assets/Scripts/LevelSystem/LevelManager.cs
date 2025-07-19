@@ -69,7 +69,6 @@ public class LevelManager : MonoBehaviour
     private IEnumerator LoadMainMenuCO()
     {
         CleanUpScene();
-
         ui.EnableInGameUI(false);
 
         cameraEffects.SwitchToMenuView();
@@ -82,7 +81,7 @@ public class LevelManager : MonoBehaviour
 
         yield return tileAnimator.GetCurrentActiveCo();
 
-        ui.EnableMainMenuUI(true);
+        ui.EnableMainMenuUI(true); 
     }
 
     private void LoadScene(string sceneNameToLoad)
