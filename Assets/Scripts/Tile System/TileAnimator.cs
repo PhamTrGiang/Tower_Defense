@@ -24,6 +24,9 @@ public class TileAnimator : MonoBehaviour
 
     private void Start()
     {
+        if (GameManager.Instance.IsTestingLevel())
+            return;
+
         CollectMainSceneObjects();
         ShowGrid(mainSceneGrid, true);
     }

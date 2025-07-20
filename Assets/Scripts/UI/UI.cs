@@ -30,7 +30,9 @@ public class UI : MonoBehaviour
         //ActivateFadeEffect(true);
         SwitchTo(settingsUI.gameObject);
         SwitchTo(mainMenuUI.gameObject);
-        //SwitchTo(inGameUI.gameObject);
+
+        if (GameManager.Instance.IsTestingLevel())
+            SwitchTo(inGameUI.gameObject);
     }
 
 

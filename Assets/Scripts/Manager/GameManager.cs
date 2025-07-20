@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
+    public static GameManager Instance { get; private set; }
     private UI_InGame inGameUI;
     private WaveManager currentActiveWaveManager;
     private LevelManager levelManager;
@@ -22,18 +22,35 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this.gameObject);
+
         inGameUI = FindFirstObjectByType<UI_InGame>(FindObjectsInactive.Include);
         levelManager = FindFirstObjectByType<LevelManager>();
         cameraEffects = FindFirstObjectByType<CameraEffects>();
+
     }
 
     private void Start()
     {
         Application.targetFrameRate = 60;
         currentHp = maxHp;
+
+        if (IsTestingLevel())
+        {
+            currency += 9999;
+            currentHp += 9999;
+        }
+
+
         inGameUI.UpdateHealthPointsUI(currentHp, maxHp);
         inGameUI.UpdateCurrencyUI(currency);
+
     }
+
+    public bool IsTestingLevel() => levelManager == null;
 
     public IEnumerator LevelFailed()
     {

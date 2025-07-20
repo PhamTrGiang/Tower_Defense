@@ -14,12 +14,12 @@ public class UI_Setting : MonoBehaviour
     [Header("SFX Settings")]
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private TextMeshProUGUI sfxText;
-    [SerializeField] private string sfxParameter;
+    private const string sfxParameter = "sfxVolume";
 
     [Header("BGM Settings")]
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private TextMeshProUGUI bgmText;
-    [SerializeField] private string bgmParameter;
+    private const string bgmParameter = "bgmVolume";
 
     [Header("Keyboard Sensetivity")]
     [SerializeField] private Slider keyboardSenseSlider;

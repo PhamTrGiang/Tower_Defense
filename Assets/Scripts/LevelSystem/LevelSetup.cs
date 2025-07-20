@@ -21,6 +21,7 @@ public class LevelSetup : MonoBehaviour
 
     private IEnumerator Start()
     {
+        UnlockAvalibleTowers();
 
         if (LevelWasLoadedToMainScene())
         {
@@ -35,7 +36,6 @@ public class LevelSetup : MonoBehaviour
 
             ui = FindFirstObjectByType<UI>();
             ui.EnableInGameUI(true);
-            UnlockAvalibleTowers();
 
             gameManager = FindFirstObjectByType<GameManager>();
             gameManager.UpdateGameManager(levelCurrency, myWaveManager);
@@ -61,6 +61,8 @@ public class LevelSetup : MonoBehaviour
 
     private void UnlockAvalibleTowers()
     {
+        UI ui = FindFirstObjectByType<UI>();
+        
         foreach (var unlockData in towerUnlocks)
         {
             foreach (var buildButton in ui.buildButtonsUI.GetBuildButtons())

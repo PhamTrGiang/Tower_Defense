@@ -78,9 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f848cfdd2de7b604cb7458b0ebc4d96a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypointList: []
+  myWaveManager: {fileID: 0}
   spawnCooldown: 0.2
-  enemiesToCreate: []
+  waypointList: []
 --- !u!1 &7561827378940362013
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +265,7 @@ PrefabInstance:
     - target: {fileID: 7616365805186449297, guid: e2bbc1726bb55224eb6e2b6733516821, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: cb7b67661138e734d84f264c74994a56, type: 2}
+      objectReference: {fileID: 2100000, guid: 16653557fde25314aa462d05e2f15883, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
