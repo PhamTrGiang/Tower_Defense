@@ -5040,6 +5040,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   verticalRotationSpeed: 5
+  transperentMat: {fileID: 2100000, guid: 181d3b1bc850b2b409efaf294777e458, type: 2}
 --- !u!195 &5168584157678668513
 NavMeshAgent:
   m_ObjectHideFlags: 0

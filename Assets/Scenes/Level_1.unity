@@ -63509,6 +63509,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b24270213df85a24ab64cb90fd5ff45c, type: 3}
+--- !u!1 &1090693181 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2930187855226931686, guid: b24270213df85a24ab64cb90fd5ff45c, type: 3}
+  m_PrefabInstance: {fileID: 1090693180}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1096830201
 GameObject:
   m_ObjectHideFlags: 0
@@ -65669,7 +65674,7 @@ MonoBehaviour:
   - {fileID: 1578816995}
   - {fileID: 435381848}
   - {fileID: 1890914512}
-  - {fileID: 0}
+  - {fileID: 1090693181}
 --- !u!1 &1120713052
 GameObject:
   m_ObjectHideFlags: 0
@@ -108686,20 +108691,24 @@ MonoBehaviour:
     newPortal: []
     basicEnemy: 0
     fastEnemy: 2
+    swarmEnemy: 0
   - nextGird: {fileID: 0}
     newPortal: []
     basicEnemy: 0
     fastEnemy: 4
+    swarmEnemy: 0
   - nextGird: {fileID: 1675807911}
     newPortal:
     - {fileID: 838518640}
     basicEnemy: 0
     fastEnemy: 6
+    swarmEnemy: 0
   waveIndex: 0
   yOffset: 5
   tileDelay: 0.1
   basicEnemy: {fileID: 8830376046785545544, guid: c44a3437ddb6d904ab74d6af5e81cea6, type: 3}
   fastEnemy: {fileID: 6897853361467428029, guid: ac2b7b265cff11e4f929328033ad4ca3, type: 3}
+  swarmEnemy: {fileID: 0}
   gameBegin: 0
 --- !u!4 &1932499925
 Transform:

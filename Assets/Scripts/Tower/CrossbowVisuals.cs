@@ -5,6 +5,8 @@ public class CrossbowVisuals : MonoBehaviour
 {
     private Enemy myEnemy;
 
+    [Header("Attack Visuals")]
+    [SerializeField] private GameObject onHitFx;
     [SerializeField] private LineRenderer attackVisuals;
     [SerializeField] private float attackVisualsDuration = 0.1f;
 
@@ -48,7 +50,7 @@ public class CrossbowVisuals : MonoBehaviour
     {
         material = new Material(meshRenderer.material);
         meshRenderer.material = material;
-        
+
         UpdateMaterialOnLineRenderer();
         StartCoroutine(ChangeEmission(1));
     }
@@ -66,6 +68,12 @@ public class CrossbowVisuals : MonoBehaviour
         UpdateEmisionColor();
         UpdateStrings();
         UpdateAttackVisualsIfNeeded();
+    }
+
+    public void CreateOnHitFx(Vector3 hitPoint)
+    {
+        GameObject newFx = Instantiate(onHitFx, hitPoint, Random.rotation);
+        Destroy(newFx, 1);
     }
 
     private void UpdateAttackVisualsIfNeeded()
@@ -104,10 +112,10 @@ public class CrossbowVisuals : MonoBehaviour
 
     public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint, Enemy newEnemy)
     {
-        StartCoroutine(VFXCoroutine(startPoint, endPoint,newEnemy));
+        StartCoroutine(VFXCoroutine(startPoint, endPoint, newEnemy));
     }
 
-    private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint,Enemy newEnemy)
+    private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint, Enemy newEnemy)
     {
         myEnemy = newEnemy;
 

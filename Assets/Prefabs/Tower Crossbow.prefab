@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentEnemy: {fileID: 0}
-  attackCooldown: 3
+  attackCooldown: 1
   enemyPriorityType: 2
   towerHead: {fileID: 7244391273310290594}
   rotationSpeed: 10
@@ -58,9 +58,12 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
+  whatIsTargetable:
+    serializedVersion: 2
+    m_Bits: 129
   dynamicTargetChange: 0
   attacksSfx: {fileID: 1421895474176491850}
-  damage: 2
+  damage: 100
   gunPoint: {fileID: 4546418986019382694}
 --- !u!114 &9154773733626991724
 MonoBehaviour:
@@ -74,6 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33b20fd2d07ac04ab86bd2d8cb28c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onHitFx: {fileID: 5237812334684362971, guid: f75b3bbf1bea0384e8b9c39ef43b8261, type: 3}
   attackVisuals: {fileID: 2812188801114849088}
   attackVisualsDuration: 0.1
   meshRenderer: {fileID: 1844136108254787958}
@@ -156,7 +160,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: becbb4dde857e67428161d08a1fdbac9, type: 2}
+  - {fileID: 2100000, guid: 925d4867105655c47a28683e6f88b8cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

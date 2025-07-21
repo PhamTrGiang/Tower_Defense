@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class WaveDetails
@@ -12,6 +10,8 @@ public class WaveDetails
     public int basicEnemy;
     public int fastEnemy;
     public int swarmEnemy;
+    public int heavyEnemy;
+    public int stealthEnemy;
 }
 
 public class WaveManager : MonoBehaviour
@@ -38,6 +38,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private GameObject basicEnemy;
     [SerializeField] private GameObject fastEnemy;
     [SerializeField] private GameObject swarmEnemy;
+    [SerializeField] private GameObject heavyEnemy;
+    [SerializeField] private GameObject stealthEnemy;
 
     private List<EnemyPortal> enemyPortals;
     private bool waveTimerEnable;
@@ -59,7 +61,7 @@ public class WaveManager : MonoBehaviour
             ActivateWaveManager();
 
         if (gameBegin == false)
-                return;
+            return;
         HandleWaveTimer();
     }
 
@@ -78,7 +80,7 @@ public class WaveManager : MonoBehaviour
             return;
 
         if (AllEnemiesDefeated() == false || makingNextWave)
-                return;
+            return;
 
         makingNextWave = true;
         waveIndex++;
@@ -264,6 +266,14 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < levelWaves[waveIndex].swarmEnemy; i++)
         {
             newEnemyList.Add(swarmEnemy);
+        }
+        for (int i = 0; i < levelWaves[waveIndex].heavyEnemy; i++)
+        {
+            newEnemyList.Add(heavyEnemy);
+        }
+        for (int i = 0; i < levelWaves[waveIndex].stealthEnemy; i++)
+        {
+            newEnemyList.Add(stealthEnemy);
         }
 
         return newEnemyList;

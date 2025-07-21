@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyVisuals : MonoBehaviour
@@ -6,14 +7,49 @@ public class EnemyVisuals : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private float verticalRotationSpeed;
 
+    [Header("Transperent Details")]
+    [SerializeField] private Material transperentMat;
+    private List<Material> originalMat;
+    private MeshRenderer[] myRenderers;
+
+    protected virtual void Awake()
+    {
+        CollectDefaultMaterial();
+    }
+
     protected virtual void Start()
     {
-
     }
 
     protected virtual void Update()
     {
         AlighWithSlope();
+
+        if (Input.GetKeyDown(KeyCode.X))
+            MakeTransperent(true);
+            
+        if (Input.GetKeyDown(KeyCode.C))
+            MakeTransperent(false);
+    }
+
+    public void MakeTransperent(bool transperent)
+    {
+        for (int i = 0; i < myRenderers.Length; i++)
+        {
+            Material materialToApply = transperent ? transperentMat : originalMat[i]; ;
+            myRenderers[i].material = materialToApply;
+        }
+    }
+
+    protected void CollectDefaultMaterial()
+    {
+        myRenderers = GetComponentsInChildren<MeshRenderer>();
+        originalMat = new List<Material>();
+
+        foreach (var renderer in myRenderers)
+        {
+            originalMat.Add(renderer.material);
+        }
     }
 
     private void AlighWithSlope()

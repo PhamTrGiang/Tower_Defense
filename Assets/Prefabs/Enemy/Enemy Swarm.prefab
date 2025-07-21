@@ -604,11 +604,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569cf61aa282eae4b919881058ec9e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visuals: {fileID: 0}
+  visuals: {fileID: 7427651428920173073}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   verticalRotationSpeed: 0
+  transperentMat: {fileID: 2100000, guid: 181d3b1bc850b2b409efaf294777e458, type: 2}
   vatiants:
   - {fileID: 5003615974629150285}
   - {fileID: 9213952991026407677}

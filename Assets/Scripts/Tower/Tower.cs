@@ -17,6 +17,7 @@ public abstract class Tower : MonoBehaviour
     [SerializeField] private float attackRange = 2.5f;
 
     [SerializeField] private LayerMask whatIsEnemy;
+    [SerializeField] protected LayerMask whatIsTargetable;
 
     [Space]
     [SerializeField] private bool dynamicTargetChange;
@@ -47,7 +48,7 @@ public abstract class Tower : MonoBehaviour
 
         RotateTowardsEnemy();
     }
-    
+
     public float GetAttackRange() => attackRange;
 
     private void LooseTargetIfNeeded()
@@ -90,6 +91,9 @@ public abstract class Tower : MonoBehaviour
         foreach (Collider enemy in enemiesAround)
         {
             Enemy newEnemy = enemy.GetComponent<Enemy>();
+            if (newEnemy == null)
+                continue;
+
             EnemyType newEnemyType = newEnemy.GetEnemyType();
 
             if (newEnemyType == enemyPriorityType)

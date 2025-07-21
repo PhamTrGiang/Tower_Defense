@@ -119,7 +119,6 @@ Transform:
   - {fileID: 4234872204726401623}
   - {fileID: 3197913669389510773}
   - {fileID: 4015354750207570212}
-  - {fileID: 7640937720847270080}
   m_Father: {fileID: 5469236829040641638}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2912734447271543862
@@ -252,7 +251,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5469236829040641638}
+  m_Father: {fileID: 2340596874664381242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3616599974972426206
 GameObject:
@@ -370,7 +369,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3232699011180997076}
-  - {fileID: 4516211987666966429}
   m_Father: {fileID: 2340596874664381242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7438292867339811674
@@ -501,12 +499,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7801964993799942025}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.0386, y: 0.4189, z: -0.1745}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.038599968, y: 0.4189, z: -0.17449999}
+  m_LocalScale: {x: 0.1, y: 0.10000001, z: 0.10000001}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 3232699011180997076}
+  m_Father: {fileID: 2340596874664381242}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &8379440314508242870
 ParticleSystem:
@@ -5222,6 +5220,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4516211987666966429}
+  - {fileID: 7640937720847270080}
   - {fileID: 5469236829040641638}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5259,6 +5259,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   verticalRotationSpeed: 5
+  transperentMat: {fileID: 2100000, guid: 181d3b1bc850b2b409efaf294777e458, type: 2}
 --- !u!195 &299485562571861101
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5269,7 +5270,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 1
+  m_Speed: 1.1
   m_Acceleration: 8
   avoidancePriority: 1
   m_AngularSpeed: 120

@@ -21,20 +21,28 @@ public class TowerCrossbow : Tower
 
         Vector3 directionToEnemy = DirectionToEnemy(gunPoint);
 
-        if (Physics.Raycast(gunPoint.position, directionToEnemy, out RaycastHit hitInfo, Mathf.Infinity))
+        if (Physics.Raycast(gunPoint.position, directionToEnemy, out RaycastHit hitInfo, Mathf.Infinity,whatIsTargetable))
         {
             towerHead.forward = directionToEnemy;
 
             Enemy enemyTarget = null;
+
+            EnemyShield enemyShield = hitInfo.collider.GetComponent<EnemyShield>();
             IDamagable damagable = hitInfo.transform.GetComponent<IDamagable>();
 
-            if (damagable != null)
+            if (damagable != null && enemyShield == null)
             {
                 damagable.TakeDame(damage);
                 enemyTarget = currentEnemy;
             }
 
+            if (enemyShield != null)
+            {
+                damagable = enemyShield.GetComponent<IDamagable>();
+                damagable.TakeDame(damage);
+            }
 
+            visuals.CreateOnHitFx(hitInfo.point);
             visuals.PlayAttackVFX(gunPoint.position, hitInfo.point, enemyTarget);
             visuals.PlayReloadVFX(attackCooldown);
             AudioManager.Instance?.PlaySFX(attacksSfx,true);
