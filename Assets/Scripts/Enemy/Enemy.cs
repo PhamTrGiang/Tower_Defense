@@ -23,8 +23,8 @@ public class Enemy : MonoBehaviour, IDamagable
     [Header("Movements")]
     [SerializeField] private float turnSpeed = 10f;
 
-    [SerializeField] private List<Transform> myWaypoints;
-    private int nextWaypointIndex;
+    [SerializeField] protected List<Transform> myWaypoints;
+    protected int nextWaypointIndex;
     private int currentWaypointIndex;
 
     private float totalDistance;
@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
         if (ShouldChangeWaypoint())
         {
-            agent.SetDestination(GetNextWaypoint());
+            ChangeWaypoint();
         }
 
         CollectTotalDistance();
@@ -100,7 +100,12 @@ public class Enemy : MonoBehaviour, IDamagable
         isHidden = false;
     }
 
-    private bool ShouldChangeWaypoint()
+    protected virtual void ChangeWaypoint()
+    {
+        agent.SetDestination(GetNextWaypoint());
+    }
+
+    protected virtual bool ShouldChangeWaypoint()
     {
         if (nextWaypointIndex >= myWaypoints.Count) return false;
 

@@ -4,6 +4,8 @@ using UnityEngine;
 public class SpiderLeg : MonoBehaviour
 {
     [SerializeField] private float moveThreshold = .45f;
+    private EnemySpiderVisuals spiderVisuals;
+    private float legSpeed;
     private bool shouldMove;
     private bool canMove = true;
     private Coroutine moveCo;
@@ -14,16 +16,18 @@ public class SpiderLeg : MonoBehaviour
     [SerializeField] private Transform actualTarget;
     [SerializeField] private Transform bottomLeg;
     [SerializeField] private Vector3 placementOffset;
-    private Transform worldTargetReference;
+    [SerializeField] private Transform worldTargetReference;
 
     private void Awake()
     {
-        worldTargetReference = Instantiate(new GameObject("Ref_Point"), actualTarget.position, Quaternion.identity).transform;
+        spiderVisuals = GetComponentInParent<EnemySpiderVisuals>();
+        worldTargetReference = Instantiate(worldTargetReference, actualTarget.position, Quaternion.identity).transform;
         worldTargetReference.gameObject.name = legRef.gameObject.name + "_world";
     }
 
     public void UpdateLeg(float legSpeed)
     {
+        this.legSpeed = legSpeed;
         actualTarget.position = worldTargetReference.position + placementOffset;
         shouldMove = Vector3.Distance(worldTargetReference.position, legRef.ContactPoint()) > moveThreshold;
 
@@ -34,11 +38,11 @@ public class SpiderLeg : MonoBehaviour
         {
             if (moveCo != null)
                 StopCoroutine(moveCo);
-            moveCo = StartCoroutine(LegMoveCo(legSpeed));
+            moveCo = StartCoroutine(LegMoveCo());
         }
     }
 
-    private IEnumerator LegMoveCo(float legSpeed)
+    private IEnumerator LegMoveCo()
     {
         oppositeLeg.CanMove(false);
 
@@ -50,6 +54,17 @@ public class SpiderLeg : MonoBehaviour
         }
 
         oppositeLeg.CanMove(true);
+    }
+
+    public void SpeedUpLeg() => StartCoroutine(SpeedUpLegCo());
+
+    private IEnumerator SpeedUpLegCo()
+    {
+        legSpeed = spiderVisuals.increasedSpeed;
+
+        yield return new WaitForSeconds(1f);
+
+        legSpeed = spiderVisuals.legSpeed;
     }
 
     public void CanMove(bool enableMovement) => canMove = enableMovement;
