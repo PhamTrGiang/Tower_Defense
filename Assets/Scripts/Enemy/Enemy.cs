@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public enum EnemyType
 {
-    Basic, Fast, Swarm, Heavy, Stealth, Flying, None
+    Basic, Fast, Swarm, Heavy, Stealth, Flying, BossSpider, None
 }
 
 public class Enemy : MonoBehaviour, IDamagable
