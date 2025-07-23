@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +9,11 @@ public class EnemyPortal : MonoBehaviour
     private float spawnTimer;
 
     [Space]
+    [SerializeField] private ParticleSystem flyPortalFx;
+    private Coroutine flyPortalFxCo;
 
+
+    [Space]
     [SerializeField] private List<Waypoint> waypointList;
 
     private List<GameObject> enemiesToCreate = new List<GameObject>();
@@ -45,9 +50,33 @@ public class EnemyPortal : MonoBehaviour
         GameObject newEnemy = Instantiate(randomEnemy, transform.position, Quaternion.identity, transform);
 
         Enemy enemyScript = newEnemy.GetComponent<Enemy>();
-        enemyScript.SetupEnemy(waypointList,this);
+        enemyScript.SetupEnemy(waypointList, this);
 
+        PlaceEnemyAtFlyPortal(newEnemy, enemyScript.GetEnemyType());
+        
         activeEnemy.Add(newEnemy);
+    }
+
+    private void PlaceEnemyAtFlyPortal(GameObject newEnemy, EnemyType enemyType)
+    {
+        if (enemyType != EnemyType.Flying)
+            return;
+
+        if (flyPortalFxCo != null)
+            StopCoroutine(flyPortalFxCo);
+
+        flyPortalFxCo = StartCoroutine(EnableFlyPortalFxCo());
+
+        newEnemy.transform.position = flyPortalFx.transform.position;
+    }
+
+    private IEnumerator EnableFlyPortalFxCo()
+    {
+        flyPortalFx.Play();
+
+        yield return new WaitForSeconds(2);
+
+        flyPortalFx.Stop();
     }
 
     private GameObject GetRandomEnemy()
@@ -70,7 +99,7 @@ public class EnemyPortal : MonoBehaviour
     }
 
     public List<GameObject> GetActiveEnemies() => activeEnemy;
-    
+
     [ContextMenu("Collect Waypoint")]
     private void CollectWaypoint()
     {

@@ -5,15 +5,16 @@ using UnityEngine.AI;
 
 public enum EnemyType
 {
-    Basic, Fast, Swarm, Heavy, Stealth, None
+    Basic, Fast, Swarm, Heavy, Stealth, Flying, None
 }
 
 public class Enemy : MonoBehaviour, IDamagable
 {
     public EnemyVisuals visuals { get; private set; }
+    protected NavMeshAgent agent;
+    protected Rigidbody rb;
+    protected EnemyPortal myPortal;
     private GameManager gameManager;
-    private EnemyPortal myPortal;
-    private NavMeshAgent agent;
 
     [SerializeField] private EnemyType enemyType;
     [SerializeField] private Transform centerPoint;
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     protected virtual void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.avoidancePriority = Mathf.RoundToInt(agent.speed * 10);
@@ -63,7 +65,7 @@ public class Enemy : MonoBehaviour, IDamagable
         myPortal = myNewPotal;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         FaceTarget(agent.steeringTarget);
 
@@ -137,6 +139,13 @@ public class Enemy : MonoBehaviour, IDamagable
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, turnSpeed * Time.deltaTime);
     }
 
+    protected Vector3 GetFinalWaypoint()
+    {
+        if (myWaypoints.Count == 0)
+            return transform.position;
+        return myWaypoints[myWaypoints.Count - 1].position;
+    }
+
     private Vector3 GetNextWaypoint()
     {
         if (nextWaypointIndex >= myWaypoints.Count)
@@ -167,7 +176,7 @@ public class Enemy : MonoBehaviour, IDamagable
             Die();
     }
 
-    private void Die()
+    public virtual void Die()
     {
         myPortal.RemoveActiveEnemy(gameObject);
         gameManager.UpdateCurrency(1);
