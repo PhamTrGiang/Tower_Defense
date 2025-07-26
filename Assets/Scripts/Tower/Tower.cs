@@ -1,9 +1,15 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Tower : MonoBehaviour
 {
     public Enemy currentEnemy;
+
+    protected bool towerActive = true;
+    protected Coroutine deactiveatedCo;
+    protected GameObject currentEmpFx;
+
     [SerializeField] protected float attackCooldown;
     private float lastTimeAttack;
 
@@ -34,6 +40,10 @@ public abstract class Tower : MonoBehaviour
 
     private void Update()
     {
+
+        if (towerActive == false)
+            return;
+
         UpdateTargetIfNeeded();
 
         if (currentEnemy == null)
@@ -47,6 +57,29 @@ public abstract class Tower : MonoBehaviour
         LooseTargetIfNeeded();
 
         RotateTowardsEnemy();
+    }
+
+    public void DeactivevateTower(float duration,GameObject empFxPrefab)
+    {
+        if (deactiveatedCo != null)
+            StopCoroutine(deactiveatedCo);
+
+        if (currentEmpFx != null)
+            Destroy(currentEmpFx);
+
+        currentEmpFx = Instantiate(empFxPrefab, transform.position + new Vector3(0, .5f), Quaternion.identity);
+        deactiveatedCo = StartCoroutine(DisableTowerCo(duration));  
+    }
+
+    private IEnumerator DisableTowerCo(float duration)
+    {
+        towerActive = false;
+
+        yield return new WaitForSeconds(duration);
+
+        towerActive = true;
+        lastTimeAttack = Time.time;
+        Destroy(currentEmpFx);
     }
 
     public float GetAttackRange() => attackRange;
