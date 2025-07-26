@@ -1385,6 +1385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ef5d86e2db0204387e4269f9d38d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onDeadFx: {fileID: 2839038868251882465, guid: 4addeaa0197bdf142a392e86f470e04b, type: 3}
   visuals: {fileID: 7475508475258412468}
   whatIsGround:
     serializedVersion: 2

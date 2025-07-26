@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour, IDamagable
     [SerializeField] private EnemyType enemyType;
     [SerializeField] private Transform centerPoint;
     public int healthPoint = 4;
+    protected bool isDead;
 
     [Header("Movements")]
     [SerializeField] private float turnSpeed = 10f;
@@ -177,20 +178,25 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         healthPoint = healthPoint - damage;
 
-        if (healthPoint <= 0)
+        if (healthPoint <= 0 && isDead == false)
+        {
+            isDead = true;
             Die();
+        }
     }
 
     public virtual void Die()
     {
-        myPortal.RemoveActiveEnemy(gameObject);
         gameManager.UpdateCurrency(1);
-        Destroy(gameObject);
+        DestroyEnemy();
     }
 
     public void DestroyEnemy()
     {
-        myPortal.RemoveActiveEnemy(gameObject);
+        visuals.CreateOnDeadFx();
         Destroy(gameObject);
+
+        if (myPortal != null)
+            myPortal.RemoveActiveEnemy(gameObject);
     }
 }
