@@ -174,7 +174,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public EnemyType GetEnemyType() => enemyType;
 
-    public void TakeDame(int damage)
+    public virtual void TakeDame(int damage)
     {
         healthPoint = healthPoint - damage;
 

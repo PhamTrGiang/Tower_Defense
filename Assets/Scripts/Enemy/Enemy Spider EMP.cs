@@ -51,7 +51,7 @@ public class EnemySpiderEMP : MonoBehaviour
         Tower tower = other.GetComponent<Tower>();
 
         if (tower != null)
-            tower.DeactivevateTower(empEffectDuration,empFx);
+            tower.DeactivateTower(empEffectDuration,empFx);
     }
 
     void OnDrawGizmos()

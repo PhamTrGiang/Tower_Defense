@@ -1,17 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyShield : MonoBehaviour, IDamagable
+public class EnemyShield : MonoBehaviour
 {
-    [SerializeField] private float currentShieldAmount;
-
     [Header("Impact Details")]
     [SerializeField] private Material shieldMaterial;
     [SerializeField] private float defaultShieldGlow = 1;
     [SerializeField] private float impactShieldGlow = 3;
     [SerializeField] private float impactScaleMultiplier = .97f;
     [SerializeField] private float impactSpeed = .1f;
-    [SerializeField] private float impactResetDuration = .5f;
+    // [SerializeField] private float impactResetDuration = .5f;
 
     private float defaultScale;
     private string shieldFresnelParameter = "_FresnelPower";
@@ -22,20 +20,7 @@ public class EnemyShield : MonoBehaviour, IDamagable
         defaultScale = transform.localScale.x;
     }
 
-    public void SetUpShield(int shieldAmount)
-    {
-        currentShieldAmount = shieldAmount;
-    }
-
-    public void TakeDame(int damage)
-    {
-        currentShieldAmount -= damage;
-        ActivateShieldImpact();
-        if (currentShieldAmount <= 0)
-            gameObject.SetActive(false);
-    }
-
-    private void ActivateShieldImpact()
+    public void ActivateShieldImpact()
     {
         if (currentCo != null)
             StopCoroutine(currentCo);
@@ -45,7 +30,6 @@ public class EnemyShield : MonoBehaviour, IDamagable
 
     private IEnumerator ImpactCo()
     {
-
         yield return StartCoroutine(ShieldChangeCo(impactShieldGlow, defaultScale * impactScaleMultiplier, impactSpeed));
 
         StartCoroutine(ShieldChangeCo(defaultShieldGlow, defaultScale, impactSpeed));

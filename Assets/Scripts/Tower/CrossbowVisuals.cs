@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class CrossbowVisuals : MonoBehaviour
 {
-    private Enemy myEnemy;
-
     [Header("Attack Visuals")]
     [SerializeField] private GameObject onHitFx;
     [SerializeField] private LineRenderer attackVisuals;
     [SerializeField] private float attackVisualsDuration = 0.1f;
+    private Vector3 hitPoint;
 
     [Header("Gloing Visuals")]
     [SerializeField] private MeshRenderer meshRenderer;
@@ -78,9 +77,9 @@ public class CrossbowVisuals : MonoBehaviour
 
     private void UpdateAttackVisualsIfNeeded()
     {
-        if (attackVisuals.enabled && myEnemy != null)
+        if (attackVisuals.enabled && hitPoint != Vector3.zero)
         {
-            attackVisuals.SetPosition(1, myEnemy.CenterPoint());
+            attackVisuals.SetPosition(1, hitPoint);
         }
     }
 
@@ -110,14 +109,14 @@ public class CrossbowVisuals : MonoBehaviour
 
     }
 
-    public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint, Enemy newEnemy)
+    public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint)
     {
-        StartCoroutine(VFXCoroutine(startPoint, endPoint, newEnemy));
+        StartCoroutine(VFXCoroutine(startPoint, endPoint));
     }
 
-    private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint, Enemy newEnemy)
+    private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint)
     {
-        myEnemy = newEnemy;
+        hitPoint = endPoint;
 
         attackVisuals.enabled = true;
         attackVisuals.SetPosition(0, startPoint);

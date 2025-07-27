@@ -10,56 +10,42 @@ public abstract class Tower : MonoBehaviour
     protected Coroutine deactiveatedCo;
     protected GameObject currentEmpFx;
 
-    [SerializeField] protected float attackCooldown;
+    [SerializeField] private bool dynamicTargetChange;
+    [SerializeField] protected float attackCooldown = 1;
     private float lastTimeAttack;
 
     [Header("Tower Setting")]
     [SerializeField] protected EnemyType enemyPriorityType = EnemyType.None;
     [SerializeField] protected Transform towerHead;
+    [SerializeField] protected Transform gunPoint;
     [SerializeField] private float rotationSpeed = 10;
 
-    private bool canRotate;
-
     [SerializeField] private float attackRange = 2.5f;
-
     [SerializeField] private LayerMask whatIsEnemy;
     [SerializeField] protected LayerMask whatIsTargetable;
 
-    [Space]
-    [SerializeField] private bool dynamicTargetChange;
     private float targetCheckInterval = .1f;
     private float lastTimeCheckedTarget = .1f;
 
     [Header("SFX Details")]
     [SerializeField] protected AudioSource attacksSfx;
 
-    protected virtual void Awake()
-    {
-        EnableRotation(true);
-    }
+    protected virtual void Awake() { }
 
     private void Update()
     {
-
         if (towerActive == false)
             return;
 
+        LooseTargetIfNeeded();
         UpdateTargetIfNeeded();
-
-        if (currentEnemy == null)
-        {
-            currentEnemy = FindEnemyWithinRange();
-            return;
-        }
+        HandleRotation();
 
         if (CanAttack())
             Attack();
-        LooseTargetIfNeeded();
-
-        RotateTowardsEnemy();
     }
 
-    public void DeactivevateTower(float duration,GameObject empFxPrefab)
+    public void DeactivateTower(float duration, GameObject empFxPrefab)
     {
         if (deactiveatedCo != null)
             StopCoroutine(deactiveatedCo);
@@ -68,10 +54,10 @@ public abstract class Tower : MonoBehaviour
             Destroy(currentEmpFx);
 
         currentEmpFx = Instantiate(empFxPrefab, transform.position + new Vector3(0, .5f), Quaternion.identity);
-        deactiveatedCo = StartCoroutine(DisableTowerCo(duration));  
+        deactiveatedCo = StartCoroutine(DeactevateTowerCo(duration));
     }
 
-    private IEnumerator DisableTowerCo(float duration)
+    private IEnumerator DeactevateTowerCo(float duration)
     {
         towerActive = false;
 
@@ -82,16 +68,23 @@ public abstract class Tower : MonoBehaviour
         Destroy(currentEmpFx);
     }
 
-    public float GetAttackRange() => attackRange;
-
     private void LooseTargetIfNeeded()
     {
+        if (currentEnemy == null)
+            return;
+
         if (Vector3.Distance(currentEnemy.CenterPoint(), transform.position) > attackRange)
             currentEnemy = null;
     }
 
     private void UpdateTargetIfNeeded()
     {
+        if (currentEnemy == null)
+        {
+            currentEnemy = FindEnemyWithinRange();
+            return;
+        }
+
         if (dynamicTargetChange == false)
             return;
 
@@ -102,19 +95,17 @@ public abstract class Tower : MonoBehaviour
         }
     }
 
-    protected virtual void Attack() { }
+    protected virtual void Attack()
+    {
+        lastTimeAttack += Time.time;
+    }
 
     private bool CanAttack()
     {
-        if (Time.time > lastTimeAttack + attackCooldown)
-        {
-            lastTimeAttack = Time.time;
-            return true;
-        }
-        return false;
+        return Time.time > lastTimeAttack + attackCooldown && currentEnemy != null;
     }
 
-    private Enemy FindEnemyWithinRange()
+    protected virtual Enemy FindEnemyWithinRange()
     {
         List<Enemy> priorityTargets = new List<Enemy>();
         List<Enemy> possibleTargets = new List<Enemy>();
@@ -165,16 +156,15 @@ public abstract class Tower : MonoBehaviour
         return mostAdvancedEnemy;
     }
 
-    public void EnableRotation(bool enabled)
+    protected virtual void HandleRotation()
     {
-        canRotate = enabled;
+        RotateTowardsEnemy();
     }
 
     private void RotateTowardsEnemy()
     {
-        if (canRotate == false) return;
-
-        if (currentEnemy == null) return;
+        if (currentEnemy == null || towerHead == null)
+            return;
 
         Vector3 directionToEnemy = DirectionToEnemy(towerHead);
 
@@ -189,6 +179,8 @@ public abstract class Tower : MonoBehaviour
     {
         return (currentEnemy.CenterPoint() - startPoint.position).normalized;
     }
+
+    public float GetAttackRange() => attackRange;
 
     void OnDrawGizmos()
     {
