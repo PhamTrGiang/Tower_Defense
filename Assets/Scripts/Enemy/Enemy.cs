@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour, IDamagable
     protected NavMeshAgent agent;
     protected Rigidbody rb;
     protected EnemyPortal myPortal;
-    private GameManager gameManager;
+    protected GameManager gameManager;
 
     [SerializeField] private EnemyType enemyType;
     [SerializeField] private Transform centerPoint;
@@ -26,14 +26,13 @@ public class Enemy : MonoBehaviour, IDamagable
 
     [SerializeField] protected List<Transform> myWaypoints;
     protected int nextWaypointIndex;
-    private int currentWaypointIndex;
-
-    private float totalDistance;
+    protected int currentWaypointIndex;
+    protected float totalDistance;
+    protected float originalSpeed;
 
     protected bool canBeHidden = true;
     protected bool isHidden;
     private Coroutine hideCo;
-
     private int originalLayerIndex;
 
     protected virtual void Awake()
@@ -47,6 +46,7 @@ public class Enemy : MonoBehaviour, IDamagable
         originalLayerIndex = gameObject.layer;
 
         gameManager = FindFirstObjectByType<GameManager>();
+        originalSpeed = agent.speed;
     }
 
     protected virtual void Start()
@@ -76,6 +76,19 @@ public class Enemy : MonoBehaviour, IDamagable
         }
 
         CollectTotalDistance();
+    }
+
+    public void SlowSpeed(float slowMultiplier, float duration) => StartCoroutine(SlowEnemyCo(slowMultiplier, duration));
+
+    private IEnumerator SlowEnemyCo(float slowMultiplier, float duration)
+    {
+        agent.speed = originalSpeed;
+        agent.speed = agent.speed * slowMultiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        agent.speed = originalSpeed;
+
     }
 
     public void HideEnemy(float duration)

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4566392746085499231}
   - component: {fileID: 930645516100917702}
   - component: {fileID: 4659431358337307473}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,13 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c77a82002bc464f94238da2bf35c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentShieldAmount: 0
   shieldMaterial: {fileID: 2100000, guid: 32a76832b79e84347ad9df08b12709c3, type: 2}
   defaultShieldGlow: 1
   impactShieldGlow: 3
   impactScaleMultiplier: 0.97
   impactSpeed: 0.1
-  impactResetDuration: 0.5
 --- !u!33 &4566392746085499231
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -401,6 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onDeadFx: {fileID: 2839038868251882465, guid: 4addeaa0197bdf142a392e86f470e04b, type: 3}
+  onDeadFxScale: 0.5
   visuals: {fileID: 7388208538945727181}
   whatIsGround:
     serializedVersion: 2

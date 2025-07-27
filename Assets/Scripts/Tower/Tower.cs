@@ -12,27 +12,28 @@ public abstract class Tower : MonoBehaviour
 
     [SerializeField] private bool dynamicTargetChange;
     [SerializeField] protected float attackCooldown = 1;
-    private float lastTimeAttack;
+    protected float lastTimeAttack;
 
     [Header("Tower Setting")]
     [SerializeField] protected EnemyType enemyPriorityType = EnemyType.None;
     [SerializeField] protected Transform towerHead;
+    [SerializeField] protected Transform towerBody;
     [SerializeField] protected Transform gunPoint;
-    [SerializeField] private float rotationSpeed = 10;
+    [SerializeField] protected float rotationSpeed = 10;
 
-    [SerializeField] private float attackRange = 2.5f;
-    [SerializeField] private LayerMask whatIsEnemy;
+    [SerializeField] protected float attackRange = 2.5f;
+    [SerializeField] protected LayerMask whatIsEnemy;
     [SerializeField] protected LayerMask whatIsTargetable;
 
-    private float targetCheckInterval = .1f;
-    private float lastTimeCheckedTarget = .1f;
+    protected float targetCheckInterval = .1f;
+    protected float lastTimeCheckedTarget = .1f;
 
     [Header("SFX Details")]
     [SerializeField] protected AudioSource attacksSfx;
 
     protected virtual void Awake() { }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (towerActive == false)
             return;
@@ -97,10 +98,10 @@ public abstract class Tower : MonoBehaviour
 
     protected virtual void Attack()
     {
-        lastTimeAttack += Time.time;
+        lastTimeAttack = Time.time;
     }
 
-    private bool CanAttack()
+    protected virtual bool CanAttack()
     {
         return Time.time > lastTimeAttack + attackCooldown && currentEnemy != null;
     }
@@ -161,7 +162,7 @@ public abstract class Tower : MonoBehaviour
         RotateTowardsEnemy();
     }
 
-    private void RotateTowardsEnemy()
+    protected virtual void RotateTowardsEnemy()
     {
         if (currentEnemy == null || towerHead == null)
             return;
@@ -181,6 +182,7 @@ public abstract class Tower : MonoBehaviour
     }
 
     public float GetAttackRange() => attackRange;
+    public float GetAttackCooldown() => attackCooldown;
 
     void OnDrawGizmos()
     {
