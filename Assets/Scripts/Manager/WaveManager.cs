@@ -25,6 +25,7 @@ public class WaveManager : MonoBehaviour
     private UI_InGame inGameUI;
 
     [SerializeField] private GridBuilder currentGrid;
+    [SerializeField] private NavMeshSurface droneNavSurfave;
     [SerializeField] private NavMeshSurface flyingNavSurface;
     [SerializeField] private MeshCollider[] flyingNavColliders;
 
@@ -270,7 +271,10 @@ public class WaveManager : MonoBehaviour
         }
 
         currentGrid.UpdateNavMesh();
+        droneNavSurfave.BuildNavMesh();
     }
+
+    public void UpdateDroneNavMesh() => droneNavSurfave.BuildNavMesh();
 
     private List<GameObject> GetNewEnemies()
     {

@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     private UI_InGame inGameUI;
-    private WaveManager currentActiveWaveManager;
+    public WaveManager currentActiveWaveManager; //     { get; private set; }
     private LevelManager levelManager;
     private CameraEffects cameraEffects;
 

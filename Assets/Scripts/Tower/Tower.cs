@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public abstract class Tower : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public abstract class Tower : MonoBehaviour
     [SerializeField] protected AudioSource attacksSfx;
 
     protected virtual void Awake() { }
+
+    protected virtual void Start()
+    {
+        GameManager.Instance.currentActiveWaveManager.UpdateDroneNavMesh();
+    }
 
     protected virtual void Update()
     {
@@ -69,7 +75,7 @@ public abstract class Tower : MonoBehaviour
         Destroy(currentEmpFx);
     }
 
-    private void LooseTargetIfNeeded()
+    protected virtual void LooseTargetIfNeeded()
     {
         if (currentEnemy == null)
             return;
@@ -138,6 +144,12 @@ public abstract class Tower : MonoBehaviour
         return null;
     }
 
+    protected bool AtLeanstOneEnemyAround()
+    {
+        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, attackRange, whatIsEnemy);
+        return enemyColliders.Length > 0;
+    }
+
     private Enemy GetMostAdvancedEnemy(List<Enemy> targets)
     {
         Enemy mostAdvancedEnemy = null;
@@ -160,6 +172,7 @@ public abstract class Tower : MonoBehaviour
     protected virtual void HandleRotation()
     {
         RotateTowardsEnemy();
+        RotationBodyTowadsEnemy();
     }
 
     protected virtual void RotateTowardsEnemy()
@@ -174,6 +187,19 @@ public abstract class Tower : MonoBehaviour
         Vector3 rotation = Quaternion.Lerp(towerHead.rotation, lookRotation, rotationSpeed * Time.deltaTime).eulerAngles;
 
         towerHead.rotation = Quaternion.Euler(rotation);
+    }
+
+    protected void RotationBodyTowadsEnemy()
+    {
+        if (towerBody == null || currentEnemy == null)
+            return;
+
+        Vector3 directionToEnemy = DirectionToEnemy(towerBody);
+        directionToEnemy.y = 0;
+
+        Quaternion lookRotation = Quaternion.LookRotation(directionToEnemy);
+
+        towerBody.rotation = Quaternion.Slerp(towerBody.rotation, lookRotation, rotationSpeed * Time.deltaTime);
     }
 
     protected Vector3 DirectionToEnemy(Transform startPoint)

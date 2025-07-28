@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6675031212208031760}
   - component: {fileID: 6218597330422312147}
   - component: {fileID: 6783143588194688123}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: tower_cannon_stand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3873537531342388807}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GunPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 9098654049692921411}
   - component: {fileID: 6655020294972472812}
   - component: {fileID: 1660056160005091164}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5033,7 +5033,7 @@ GameObject:
   - component: {fileID: 6165218894473510117}
   - component: {fileID: 6641198056776476543}
   - component: {fileID: 2198522602429437449}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: tower_cannon_emissionPart_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5120,7 +5120,7 @@ GameObject:
   - component: {fileID: 2949798162637048517}
   - component: {fileID: 2184061515238292360}
   - component: {fileID: 690801171751344404}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: OnAttack Smoke Fx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10053,7 +10053,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7477793804958860286}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: tower_cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10121,7 +10121,7 @@ GameObject:
   - component: {fileID: 5497692144631139870}
   - component: {fileID: 5084668791319996440}
   - component: {fileID: 7111635871049967699}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: tower_cannon_emissionPart_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10207,7 +10207,7 @@ GameObject:
   - component: {fileID: 7481802791895060781}
   - component: {fileID: 6119101313512147963}
   - component: {fileID: 3030225868516642058}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: building_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10293,7 +10293,7 @@ GameObject:
   - component: {fileID: 2534694827852895728}
   - component: {fileID: 2402983205447093937}
   - component: {fileID: 2512191803494962716}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: building_2_emission_red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10379,7 +10379,7 @@ GameObject:
   - component: {fileID: 7456159768521196086}
   - component: {fileID: 4669644552977265160}
   - component: {fileID: 5517033643484862728}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: building_2_emission_orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10465,7 +10465,7 @@ GameObject:
   - component: {fileID: 680267905535657288}
   - component: {fileID: 8753566161806828182}
   - component: {fileID: 4035112188501769626}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: tower_cannon_cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10666,7 +10666,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6872518859311186337}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: building_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10703,7 +10703,7 @@ GameObject:
   - component: {fileID: 180649802295574740}
   - component: {fileID: 4899567241615391149}
   - component: {fileID: 8200302395313617241}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: tower_cannon_base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10790,7 +10790,7 @@ GameObject:
   - component: {fileID: 7402529605796674633}
   - component: {fileID: 1565354713834514724}
   - component: {fileID: 3429626166975507357}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: building_2_emission_white
   m_TagString: Untagged
   m_Icon: {fileID: 0}

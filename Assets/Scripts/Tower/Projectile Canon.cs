@@ -30,7 +30,7 @@ public class ProjectileCanon : MonoBehaviour
             IDamagable damagable = enemy.GetComponent<IDamagable>();
 
             if (damagable != null)
-                damagable.TakeDame((int)damage);
+                damagable.TakeDame(damage);
         }
     }
 

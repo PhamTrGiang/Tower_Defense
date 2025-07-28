@@ -5,7 +5,7 @@ public class TowerCrossbow : Tower
     private CrossbowVisuals visuals;
 
     [Header("Crossbow Details")]
-    [SerializeField] private int damage;
+    [SerializeField] private float damage;
 
     protected override void Awake()
     {

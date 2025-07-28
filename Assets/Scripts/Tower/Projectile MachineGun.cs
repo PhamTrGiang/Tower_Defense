@@ -28,7 +28,7 @@ public class ProjectileMachineGun : MonoBehaviour
         if (Vector3.Distance(transform.position, target) <= .01f)
         {
             isActive = false;
-            damagable.TakeDame((int)damage);
+            damagable.TakeDame(damage);
 
             onHitFx.SetActive(true);
             Destroy(gameObject,1);

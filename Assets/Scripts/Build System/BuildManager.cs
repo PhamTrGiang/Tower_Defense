@@ -10,6 +10,8 @@ public class BuildManager : MonoBehaviour
     public WaveManager waveManager;
     public GridBuilder currentGrid;
 
+    [SerializeField] private LayerMask whatToIgnore;
+
     [Header("Build Materials")]
     [SerializeField] private Material attackRadiusMat;
     [SerializeField] private Material buildPreviewMat;
@@ -33,13 +35,13 @@ public class BuildManager : MonoBehaviour
             if (isMouseOverUI)
                 return;
 
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-                {
-                    bool clickNotOnBuildSlot = hit.collider.GetComponent<BuildSlot>() == null;
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, ~whatToIgnore))
+            {
+                bool clickNotOnBuildSlot = hit.collider.GetComponent<BuildSlot>() == null;
 
-                    if (clickNotOnBuildSlot)
-                        CancelBuildAction();
-                }
+                if (clickNotOnBuildSlot)
+                    CancelBuildAction();
+            }
         }
     }
 

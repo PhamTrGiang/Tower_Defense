@@ -57,11 +57,4 @@ public class TowerHammer : Tower
     {
         return Time.time > lastTimeAttack + attackCooldown && AtLeanstOneEnemyAround();
     }
-
-    private bool AtLeanstOneEnemyAround()
-    {
-        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, attackRange, whatIsEnemy);
-        return enemyColliders.Length > 0;
-
-    }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyHeavy : Enemy
 {
     [Header("Enemy Details")]
-    [SerializeField] private int shieldAmount = 50;
+    [SerializeField] private float shieldAmount = 50;
     [SerializeField] private EnemyShield shieldObject;
 
 
@@ -20,7 +20,7 @@ public class EnemyHeavy : Enemy
 
     }
 
-    public override void TakeDame(int damage)
+    public override void TakeDame(float damage)
     {
         if (shieldAmount > 0)
         {

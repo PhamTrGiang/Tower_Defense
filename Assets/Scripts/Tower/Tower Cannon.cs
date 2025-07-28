@@ -54,19 +54,6 @@ public class TowerCannon : Tower
         FaceLaunchDirection();
     }
 
-    private void RotationBodyTowadsEnemy()
-    {
-        if (towerBody == null)
-            return;
-
-        Vector3 directionToEnemy = DirectionToEnemy(towerBody);
-        directionToEnemy.y = 0;
-
-        Quaternion lookRotation = Quaternion.LookRotation(directionToEnemy);
-
-        towerBody.rotation = Quaternion.Slerp(towerBody.rotation, lookRotation, rotationSpeed * Time.deltaTime);
-    }
-
     private void FaceLaunchDirection()
     {
         Vector3 attackDirection = CalculateLaunchVelocity();

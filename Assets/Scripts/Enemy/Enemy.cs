@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     [SerializeField] private EnemyType enemyType;
     [SerializeField] private Transform centerPoint;
-    public int healthPoint = 4;
+    public float healthPoint = 4;
     protected bool isDead;
 
     [Header("Movements")]
@@ -134,7 +134,7 @@ public class Enemy : MonoBehaviour, IDamagable
         return distanceToBeetwenPoints > distanceToNextWaypoint;
     }
 
-    public float DistanceAToFinishLine() => totalDistance + agent.remainingDistance;
+    public virtual float DistanceAToFinishLine() => totalDistance + agent.remainingDistance;
 
     private void CollectTotalDistance()
     {
@@ -187,7 +187,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public EnemyType GetEnemyType() => enemyType;
 
-    public virtual void TakeDame(int damage)
+    public virtual void TakeDame(float damage)
     {
         healthPoint = healthPoint - damage;
 
@@ -204,7 +204,7 @@ public class Enemy : MonoBehaviour, IDamagable
         DestroyEnemy();
     }
 
-    public void DestroyEnemy()
+    public virtual void DestroyEnemy()
     {
         visuals.CreateOnDeadFx();
         Destroy(gameObject);
