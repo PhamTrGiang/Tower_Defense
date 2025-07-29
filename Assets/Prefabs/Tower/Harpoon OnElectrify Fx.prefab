@@ -9754,7 +9754,7 @@ GameObject:
   - component: {fileID: 6094523676507816205}
   - component: {fileID: 6917116877231938107}
   m_Layer: 0
-  m_Name: Harpoon Electrify VFX
+  m_Name: Harpoon OnElectrify Fx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -24612,7 +24612,7 @@ GameObject:
   - component: {fileID: 8192849128928170365}
   - component: {fileID: 6686390603794513438}
   m_Layer: 0
-  m_Name: Harpoon_ChainLink
+  m_Name: Harpoon ChainLink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

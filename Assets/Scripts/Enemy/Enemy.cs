@@ -11,6 +11,8 @@ public enum EnemyType
 public class Enemy : MonoBehaviour, IDamagable
 {
     public EnemyVisuals visuals { get; private set; }
+
+    protected ObjectPoolManager objectPool;
     protected NavMeshAgent agent;
     protected Rigidbody rb;
     protected EnemyPortal myPortal;
@@ -48,6 +50,8 @@ public class Enemy : MonoBehaviour, IDamagable
 
         gameManager = FindFirstObjectByType<GameManager>();
         originalSpeed = agent.speed;
+
+        objectPool = ObjectPoolManager.Instance;
     }
 
     protected virtual void Start()

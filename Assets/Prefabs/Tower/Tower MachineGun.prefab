@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2419580867189895265}
   - component: {fileID: 6250409549318689583}
   - component: {fileID: 8562281795702918958}
+  - component: {fileID: 4667459999911359988}
   m_Layer: 12
   m_Name: Tower MachineGun
   m_TagString: Untagged
@@ -112,6 +113,7 @@ MonoBehaviour:
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 4225
+  towerAttackForward: 0
   attacksSfx: {fileID: 0}
   projectilePrefab: {fileID: 4460119260978363980, guid: 2c9d0de894d91e444b1f4a2ba6be4318, type: 3}
   damage: 15
@@ -139,6 +141,22 @@ MonoBehaviour:
   recoilOffset: -0.2
   recoverSpeed: 1
   onAttackFx: {fileID: 3285167124216236723}
+--- !u!208 &4667459999911359988
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505395633935315230}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.425, y: 1.2, z: 0.425}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.2, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1255297430219839022
 GameObject:
   m_ObjectHideFlags: 0

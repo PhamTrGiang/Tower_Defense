@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public abstract class Tower : MonoBehaviour
 {
+    protected ObjectPoolManager objectPool;
     public Enemy currentEnemy;
 
     protected bool towerActive = true;
@@ -29,18 +31,22 @@ public abstract class Tower : MonoBehaviour
 
     protected float targetCheckInterval = .1f;
     protected float lastTimeCheckedTarget = .1f;
+    protected Collider[] allocatedColliders = new Collider[100];
 
     [Header("SFX Details")]
     [SerializeField] protected AudioSource attacksSfx;
 
-    protected virtual void Awake() { }
+    protected virtual void Awake()
+    {
+        objectPool = ObjectPoolManager.Instance;
+    }
 
     protected virtual void Start()
     {
-        GameManager.Instance.currentActiveWaveManager.UpdateDroneNavMesh();
+
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         if (towerActive == false)
             return;
@@ -59,9 +65,9 @@ public abstract class Tower : MonoBehaviour
             StopCoroutine(deactiveatedCo);
 
         if (currentEmpFx != null)
-            Destroy(currentEmpFx);
+            objectPool.Remove(currentEmpFx);
 
-        currentEmpFx = Instantiate(empFxPrefab, transform.position + new Vector3(0, .5f), Quaternion.identity);
+        currentEmpFx = objectPool.Get(empFxPrefab, transform.position + new Vector3(0, .5f), Quaternion.identity);
         deactiveatedCo = StartCoroutine(DeactevateTowerCo(duration));
     }
 
@@ -73,7 +79,7 @@ public abstract class Tower : MonoBehaviour
 
         towerActive = true;
         lastTimeAttack = Time.time;
-        Destroy(currentEmpFx);
+        objectPool.Remove(currentEmpFx);
     }
 
     protected virtual void LooseTargetIfNeeded()
@@ -118,12 +124,18 @@ public abstract class Tower : MonoBehaviour
         List<Enemy> priorityTargets = new List<Enemy>();
         List<Enemy> possibleTargets = new List<Enemy>();
 
-        Collider[] enemiesAround = Physics.OverlapSphere(transform.position, attackRange, whatIsEnemy);
+        //Collider[] enemiesAround = Physics.OverlapSphere(transform.position, attackRange, whatIsEnemy);
+        int enemiesAround = Physics.OverlapSphereNonAlloc(transform.position, attackRange, allocatedColliders, whatIsEnemy);
 
-        foreach (Collider enemy in enemiesAround)
+        for (int i = 0; i < enemiesAround; i++)
         {
-            Enemy newEnemy = enemy.GetComponent<Enemy>();
+            Enemy newEnemy = allocatedColliders[i].GetComponent<Enemy>();
             if (newEnemy == null)
+                continue;
+
+            float distanceToEnemy = Vector3.Distance(transform.position, newEnemy.transform.position);
+
+            if (distanceToEnemy > attackRange)
                 continue;
 
             EnemyType newEnemyType = newEnemy.GetEnemyType();
@@ -147,8 +159,8 @@ public abstract class Tower : MonoBehaviour
 
     protected bool AtLeanstOneEnemyAround()
     {
-        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, attackRange, whatIsEnemy);
-        return enemyColliders.Length > 0;
+        int enemyColliders = Physics.OverlapSphereNonAlloc(transform.position, attackRange, allocatedColliders, whatIsEnemy);
+        return enemyColliders > 0;
     }
 
     private Enemy GetMostAdvancedEnemy(List<Enemy> targets)

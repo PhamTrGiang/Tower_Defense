@@ -15,24 +15,25 @@ public class TowerCannon : Tower
         Vector3 velocity = CalculateLaunchVelocity();
         attackVFX.Play();
 
-        GameObject newProjectile = Instantiate(projectilePrefab, gunPoint.position, Quaternion.identity);
-        newProjectile.GetComponent<ProjectileCanon>().SetupProjectile(velocity, damage);
+        GameObject newProjectile = objectPool.Get(projectilePrefab, gunPoint.position, Quaternion.identity);
+        newProjectile.GetComponent<ProjectileCanon>().SetupProjectile(velocity, damage, objectPool);
     }
 
     protected override Enemy FindEnemyWithinRange()
     {
-        Collider[] enemiesAround = Physics.OverlapSphere(transform.position, attackRange, whatIsEnemy);
+        int colliderFound = Physics.OverlapSphereNonAlloc(transform.position, attackRange, allocatedColliders, whatIsEnemy);
         Enemy bestTarget = null;
         int maxNearbyEnemies = 0;
 
-        foreach (Collider enemy in enemiesAround)
+        for (int i = 0; i < colliderFound; i++)
         {
-            int amountOfEnemiesAround = EnemiesAroundEnemy(enemy.transform);
+            Transform enemyTransform = allocatedColliders[i].transform;
+            int amountOfEnemiesAround = EnemiesAroundEnemy(enemyTransform);
 
             if (amountOfEnemiesAround > maxNearbyEnemies)
             {
                 maxNearbyEnemies = amountOfEnemiesAround;
-                bestTarget = enemy.GetComponent<Enemy>();
+                bestTarget = enemyTransform.GetComponent<Enemy>();
             }
         }
         return bestTarget;
@@ -40,9 +41,7 @@ public class TowerCannon : Tower
 
     private int EnemiesAroundEnemy(Transform enemyToCheck)
     {
-        Collider[] enemiesAround = Physics.OverlapSphere(enemyToCheck.position, 1, whatIsEnemy);
-
-        return enemiesAround.Length;
+        return Physics.OverlapSphereNonAlloc(enemyToCheck.position, 1, allocatedColliders, whatIsEnemy);
     }
 
     protected override void HandleRotation()

@@ -25,7 +25,7 @@ public class TowerHarpoon : Tower
     protected override void Awake()
     {
         base.Awake();
-        CreateNewProjectile();
+        currentProjectile = GetComponentInChildren<ProjectileHarpoon>();
         harpoonVisuals = GetComponent<HarpoonVisuals>();
     }
 
@@ -89,7 +89,7 @@ public class TowerHarpoon : Tower
 
     private void CreateNewProjectile()
     {
-        GameObject newProjectile = Instantiate(projectilePrefab, projectileDefaultPosition.position, projectileDefaultPosition.rotation, towerHead);
+        GameObject newProjectile = objectPool.Get(projectilePrefab, projectileDefaultPosition.position, projectileDefaultPosition.rotation, towerHead);
         currentProjectile = newProjectile.GetComponent<ProjectileHarpoon>();
     }
 

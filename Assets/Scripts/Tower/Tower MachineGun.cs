@@ -31,8 +31,8 @@ public class TowerMachineGun : Tower
             if (damagable == null)
                 return;
 
-            GameObject newProjetile = Instantiate(projectilePrefab, gunPoint.position, gunPoint.rotation);
-            newProjetile.GetComponent<ProjectileMachineGun>().SetupProjectile(hitInfo.point, damagable, damage, projectileSpeed);
+            GameObject newProjetile =  objectPool.Get(projectilePrefab, gunPoint.position, gunPoint.rotation);
+            newProjetile.GetComponent<ProjectileMachineGun>().SetupProjectile(hitInfo.point, damagable, damage, projectileSpeed,objectPool);
 
             machineGunVisuals.RecoilFx(gunPoint);
 

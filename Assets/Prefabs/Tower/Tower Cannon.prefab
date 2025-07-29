@@ -10554,6 +10554,7 @@ GameObject:
   - component: {fileID: 8785691546098418478}
   - component: {fileID: 6415217168787840213}
   - component: {fileID: 519602454050937942}
+  - component: {fileID: 652492959783693439}
   m_Layer: 12
   m_Name: Tower Cannon
   m_TagString: Untagged
@@ -10652,11 +10653,28 @@ MonoBehaviour:
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 129
+  towerAttackForward: 0
   attacksSfx: {fileID: 0}
   damage: 100
   projectilePrefab: {fileID: 4714415432469264609, guid: cae73230616669b4a8b84a5c85c8aded, type: 3}
   timeToTarget: 1.5
   attackVFX: {fileID: 2184061515238292360}
+--- !u!208 &652492959783693439
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189922344957734383}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.425, y: 1, z: 0.425}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8486317539494913366
 GameObject:
   m_ObjectHideFlags: 0

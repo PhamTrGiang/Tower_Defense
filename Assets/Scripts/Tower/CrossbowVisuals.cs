@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CrossbowVisuals : MonoBehaviour
 {
+    private ObjectPoolManager objectPool;
+
     [Header("Attack Visuals")]
     [SerializeField] private GameObject onHitFx;
     [SerializeField] private LineRenderer attackVisuals;
@@ -53,6 +55,10 @@ public class CrossbowVisuals : MonoBehaviour
         UpdateMaterialOnLineRenderer();
         StartCoroutine(ChangeEmission(1));
     }
+    private void Start()
+    {
+        objectPool = ObjectPoolManager.Instance;
+    }
 
     private void UpdateMaterialOnLineRenderer()
     {
@@ -69,11 +75,7 @@ public class CrossbowVisuals : MonoBehaviour
         UpdateAttackVisualsIfNeeded();
     }
 
-    public void CreateOnHitFx(Vector3 hitPoint)
-    {
-        GameObject newFx = Instantiate(onHitFx, hitPoint, Random.rotation);
-        Destroy(newFx, 1);
-    }
+    public void CreateOnHitFx(Vector3 hitPoint) => objectPool.Get(onHitFx, hitPoint, Random.rotation);
 
     private void UpdateAttackVisualsIfNeeded()
     {

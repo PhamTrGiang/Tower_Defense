@@ -3,22 +3,27 @@ using UnityEngine;
 
 public class ProjectileCanon : MonoBehaviour
 {
+    private TrailRenderer trail;
+    private ObjectPoolManager objectPool;
     private Rigidbody rb;
     private float damage;
 
     [SerializeField] private float damageRadius;
     [SerializeField] private LayerMask whatIsEnemy;
-    [SerializeField] private GameObject ExplosionFx;
+    [SerializeField] private GameObject explosionFx;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        trail = GetComponent<TrailRenderer>();
     }
 
-    public void SetupProjectile(Vector3 newVelocity, float newDamage)
+    public void SetupProjectile(Vector3 newVelocity, float newDamage, ObjectPoolManager newPool)
     {
+        trail.Clear();
         rb.linearVelocity = newVelocity;
         damage = newDamage;
+        objectPool = newPool;
     }
 
     private void DamageEnemiesAround()
@@ -37,9 +42,9 @@ public class ProjectileCanon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         DamageEnemiesAround();
-        ExplosionFx.SetActive(true);
-        ExplosionFx.transform.parent = null;
-        Destroy(gameObject);
+
+        objectPool.Get(explosionFx, transform.position+new Vector3(0,.5f,0));
+        objectPool.Remove(gameObject);
     }
 
     private void OnDrawGizmos()

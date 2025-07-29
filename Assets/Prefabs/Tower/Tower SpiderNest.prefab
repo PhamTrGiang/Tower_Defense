@@ -939,6 +939,7 @@ GameObject:
   - component: {fileID: 8552856529132620076}
   - component: {fileID: 8685723534578059115}
   - component: {fileID: 6864249342991718725}
+  - component: {fileID: -6980945350338031272}
   m_Layer: 12
   m_Name: Tower SpiderNest
   m_TagString: Untagged
@@ -1037,6 +1038,7 @@ MonoBehaviour:
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 0
+  towerAttackForward: 0
   attacksSfx: {fileID: 0}
   damage: 15
   spiderPrefab: {fileID: 4958920976250901867, guid: 393d2832da8160e4c84180cdee1278ab, type: 3}
@@ -1056,6 +1058,22 @@ MonoBehaviour:
   - {fileID: 3797272208023847394}
   - {fileID: 2403607105630119744}
   - {fileID: 3426433684378670029}
+--- !u!208 &-6980945350338031272
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7670835449513159876}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.425, y: 1.4, z: 0.425}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.4, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8215324453589330060
 GameObject:
   m_ObjectHideFlags: 0
