@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
-public class TowerAttackRadirusDisplay : MonoBehaviour
+public class RadiusDisplay : MonoBehaviour
 {
     private LineRenderer lineRenderer;
 

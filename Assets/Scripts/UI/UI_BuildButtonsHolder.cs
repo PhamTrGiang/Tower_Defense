@@ -15,11 +15,12 @@ public class UI_BuildButtonsHolder : MonoBehaviour
 
     private List<UI_BuildButton> unlockedButtons;
     private UI_BuildButton lastSelectedButton;
+    private Transform previewTower;
 
     private void Awake()
     {
         uiAnim = GetComponentInParent<UI_Animator>();
-        buildButtonEffects = GetComponentsInChildren<UI_BuildButtonOnHoverEffect>();    
+        buildButtonEffects = GetComponentsInChildren<UI_BuildButtonOnHoverEffect>();
         buildButtons = GetComponentsInChildren<UI_BuildButton>();
     }
 
@@ -41,9 +42,30 @@ public class UI_BuildButtonsHolder : MonoBehaviour
                 break;
             }
         }
+        if (lastSelectedButton != null)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                lastSelectedButton.ConfirmTowerBuild();
+                previewTower = null;
+            }
+            if (Input.GetKeyDown(KeyCode.Q))
+                RotateTarget(previewTower, -90);
 
-        if (Input.GetKeyDown(KeyCode.Space) && lastSelectedButton != null)
-            lastSelectedButton.BuildTower();
+            if (Input.GetKeyDown(KeyCode.E))
+                RotateTarget(previewTower, 90);
+        }
+    }
+
+    private void RotateTarget(Transform target, float angel)
+    {
+        if (target == null)
+            return;
+
+        target.Rotate(0, angel, 0);
+        ForwardAttackDisplay forwardDisplay = target.GetComponent<ForwardAttackDisplay>();
+        if (forwardDisplay != null)
+            forwardDisplay.UpdateLine();
     }
 
     public void SelectNewButton(int buttonIndex)
@@ -64,14 +86,19 @@ public class UI_BuildButtonsHolder : MonoBehaviour
     public List<UI_BuildButton> GetUnlockedButtons() => unlockedButtons;
     public UI_BuildButton GetLastSelectedButton() => lastSelectedButton;
 
-    public void SetLastSelected(UI_BuildButton newLastSelected) => lastSelectedButton = newLastSelected;
+    public void SetLastSelected(UI_BuildButton newLastSelected, Transform newPreview)
+    {
+        lastSelectedButton = newLastSelected;
+        previewTower = newPreview;
+    }
+
     public void UpdateUnlockedButtons()
     {
         unlockedButtons = new List<UI_BuildButton>();
 
         foreach (var button in buildButtons)
         {
-            if(button.buttonUnlocked)
+            if (button.buttonUnlocked)
                 unlockedButtons.Add(button);
         }
     }
@@ -83,10 +110,10 @@ public class UI_BuildButtonsHolder : MonoBehaviour
         float yOffset = isBuildMenuActive ? yPositionOffset : -yPositionOffset;
         float methodDelay = isBuildMenuActive ? openAnimationDuration : 0;
 
-        uiAnim.ChangePosition(transform, new Vector3(0,yOffset), openAnimationDuration);
+        uiAnim.ChangePosition(transform, new Vector3(0, yOffset), openAnimationDuration);
         Invoke(nameof(ToggleButtonMovement), methodDelay);
     }
-    
+
     private void ToggleButtonMovement()
     {
         foreach (var button in buildButtonEffects)

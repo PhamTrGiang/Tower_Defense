@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class EnemyStealth : Enemy
     [SerializeField] private List<Enemy> enemiesToHide;
     [SerializeField] private float hideDuration = .5f;
     [SerializeField] private ParticleSystem smokeFx;
+    private bool canHideEnemy = true;
 
     protected override void Awake()
     {
@@ -20,6 +22,9 @@ public class EnemyStealth : Enemy
 
     private void HideEnemies()
     {
+        if (canHideEnemy == false)
+            return;
+
         foreach (Enemy enemy in enemiesToHide)
         {
             enemy.HideEnemy(hideDuration);
@@ -29,12 +34,22 @@ public class EnemyStealth : Enemy
     public List<Enemy> GetEnemiesToHide() => enemiesToHide;
     public void EnableSmoke(bool enable)
     {
-        if (enable)
-        {
-            if (smokeFx.isPlaying == false)
-                smokeFx.Play();
-            else
-                smokeFx.Stop();
-        }
+        if (smokeFx.isPlaying == false && enable)
+            smokeFx.Play();
+        else if (smokeFx.isPlaying == true && !enable)
+            smokeFx.Stop();
+    }
+
+    protected override IEnumerator DisableHideCo(float duration)
+    {
+        EnableSmoke(false);
+        canBeHidden = false;
+        canHideEnemy = false;
+
+        yield return new WaitForSeconds(duration);
+
+        EnableSmoke(true);
+        canBeHidden = true;
+        canHideEnemy = true;
     }
 }

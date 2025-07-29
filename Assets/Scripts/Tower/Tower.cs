@@ -25,6 +25,7 @@ public abstract class Tower : MonoBehaviour
     [SerializeField] protected float attackRange = 2.5f;
     [SerializeField] protected LayerMask whatIsEnemy;
     [SerializeField] protected LayerMask whatIsTargetable;
+    public bool towerAttackForward;
 
     protected float targetCheckInterval = .1f;
     protected float lastTimeCheckedTarget = .1f;

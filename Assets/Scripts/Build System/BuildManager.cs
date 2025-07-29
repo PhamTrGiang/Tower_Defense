@@ -5,8 +5,10 @@ using UnityEngine;
 public class BuildManager : MonoBehaviour
 {
     private UI ui;
-    public BuildSlot selectedBuildSlot;
+    private GameManager gameManager;
+    private CameraEffects cameraEffects;
 
+    public BuildSlot selectedBuildSlot;
     public WaveManager waveManager;
     public GridBuilder currentGrid;
 
@@ -16,13 +18,55 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Material attackRadiusMat;
     [SerializeField] private Material buildPreviewMat;
 
+    [Header("Build Details")]
+    [SerializeField] private float towerCenterY = .5f;
+    [SerializeField] private float camShakeDuration = .15f;
+    [SerializeField] private float camShakeMagnitude = .02f;
+
     private bool isMouseOverUI;
 
     private void Awake()
     {
         ui = FindFirstObjectByType<UI>();
+        cameraEffects = FindFirstObjectByType<CameraEffects>();
 
         MakeBuildSlotNotAvalibleIfNeeded(waveManager, currentGrid);
+    }
+
+    private void Start()
+    {
+        gameManager = GameManager.Instance;
+    }
+
+    public void BuildTower(GameObject towerToBuild, int towerPrice,Transform newPreviewTower)
+    {
+        if (gameManager.HasEnoughtCurrency(towerPrice) == false)
+        {
+            ui.inGameUI.ShakeCurrencyUI();
+            return;
+        }
+
+        if (towerToBuild == null)
+        {
+            Debug.LogWarning("You did not assign tower to this button!");
+            return;
+        }
+
+        if (ui.buildButtonsUI.GetLastSelectedButton() == null)
+            return;
+        Transform previewTower = newPreviewTower;
+        BuildSlot slotToUse = GetSelectedSlot();
+        CancelBuildAction();
+
+        slotToUse.SnapToDefaultPositionImmidiatly();
+        slotToUse.SetSlotAvailibleTo(false);
+
+        ui.buildButtonsUI.SetLastSelected(null, null);
+
+        cameraEffects.ScreenShake(camShakeDuration, camShakeMagnitude);
+
+        GameObject newTower = Instantiate(towerToBuild, slotToUse.GetBuildPosition(towerCenterY), Quaternion.identity);
+        newTower.transform.rotation = previewTower.rotation;
     }
 
     private void Update()

@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour, IDamagable
     protected bool canBeHidden = true;
     protected bool isHidden;
     private Coroutine hideCo;
+    private Coroutine disableHideCo;
     private int originalLayerIndex;
 
     protected virtual void Awake()
@@ -89,6 +90,23 @@ public class Enemy : MonoBehaviour, IDamagable
 
         agent.speed = originalSpeed;
 
+    }
+
+    public void DisableHide(float duration)
+    {
+        if (disableHideCo != null)
+            StopCoroutine(disableHideCo);
+
+        disableHideCo = StartCoroutine(DisableHideCo(duration));
+    }
+
+    protected virtual IEnumerator DisableHideCo(float duration)
+    {
+        canBeHidden = false;
+
+        yield return new WaitForSeconds(duration);
+
+        canBeHidden = true;
     }
 
     public void HideEnemy(float duration)

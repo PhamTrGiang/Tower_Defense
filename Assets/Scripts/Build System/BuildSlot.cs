@@ -43,6 +43,7 @@ public class BuildSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (buildManager.GetSelectedSlot() == this)
             return;
 
+        SnapToBeforeBuildPosition();
         buildManager.EnebleBuildMenu();
         buildManager.SelectBuildSlot(this);
         MoveTileUp();
@@ -102,6 +103,12 @@ public class BuildSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             StopCoroutine(moveToDefaultCo);
 
         transform.position = defaultPosition;
+    }
+
+    public void SnapToBeforeBuildPosition()
+    {
+        Vector3 targetPosition = defaultPosition + new Vector3(0, tileAnim.GetBuildOffset(), 0);
+        transform.position = targetPosition;
     }
 
     public Vector3 GetBuildPosition(float yOffset) => defaultPosition + new Vector3(0, yOffset);

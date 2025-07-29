@@ -151,7 +151,6 @@ MonoBehaviour:
   towerName: Crossbow
   towerPrice: 50
   towerToBuild: {fileID: 148850356375959528, guid: d03901f6bfb488c47be5b3e96d2a0189, type: 3}
-  towerCenterY: 0.5
   towerNameText: {fileID: 803488237599484677}
   towerPriceText: {fileID: 8033265979918679228}
 --- !u!222 &5555112047888437370
