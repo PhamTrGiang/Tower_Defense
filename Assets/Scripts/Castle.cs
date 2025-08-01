@@ -9,7 +9,7 @@ public class Castle : MonoBehaviour
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy)
         {
-            other.GetComponent<Enemy>().DestroyEnemy();
+            other.GetComponent<Enemy>().RemoveEnemy();
 
             if (gameManager == null)
                 gameManager = FindAnyObjectByType<GameManager>();

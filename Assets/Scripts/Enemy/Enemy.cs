@@ -20,13 +20,14 @@ public class Enemy : MonoBehaviour, IDamagable
 
     [SerializeField] private EnemyType enemyType;
     [SerializeField] private Transform centerPoint;
-    public float healthPoint = 4;
+    public float maxHp = 100;
+    public float currentHp = 4;
     protected bool isDead;
 
     [Header("Movements")]
     [SerializeField] private float turnSpeed = 10f;
 
-    [SerializeField] protected List<Transform> myWaypoints;
+    [SerializeField] protected Vector3[] myWaypoints;
     protected int nextWaypointIndex;
     protected int currentWaypointIndex;
     protected float totalDistance;
@@ -59,16 +60,43 @@ public class Enemy : MonoBehaviour, IDamagable
 
     }
 
-    public void SetupEnemy(List<Waypoint> newWaypoint, EnemyPortal myNewPotal)
+    public void SetupEnemy(EnemyPortal myNewPotal)
     {
-        myWaypoints = new List<Transform>();
-
-        foreach (var point in newWaypoint)
-        {
-            myWaypoints.Add(point.transform);
-        }
-
         myPortal = myNewPotal;
+
+        UpdateWaypoints(myPortal.currentWaypoints);
+        CollectTotalDistance();
+        ResetEnemy();
+        BeginMovement();
+    }
+
+    private void UpdateWaypoints(Vector3[] newWaypoints)
+    {
+        myWaypoints = new Vector3[newWaypoints.Length];
+
+        for (int i = 0; i < myWaypoints.Length; i++)
+            myWaypoints[i] = newWaypoints[i];
+    }
+
+    private void BeginMovement()
+    {
+
+        currentWaypointIndex = 0;
+        nextWaypointIndex = 0;
+        ChangeWaypoint();
+    }
+
+    protected void ResetEnemy()
+    {
+        gameObject.layer = originalLayerIndex;
+
+        visuals.MakeTransperent(false);
+
+        currentHp = maxHp;
+        isDead = false;
+
+        agent.speed = originalSpeed;
+        agent.enabled = true;
     }
 
     protected virtual void Update()
@@ -143,12 +171,12 @@ public class Enemy : MonoBehaviour, IDamagable
 
     protected virtual bool ShouldChangeWaypoint()
     {
-        if (nextWaypointIndex >= myWaypoints.Count) return false;
+        if (nextWaypointIndex >= myWaypoints.Length) return false;
 
         if (agent.remainingDistance < .5f) return true;
 
-        Vector3 currentWaypoint = myWaypoints[currentWaypointIndex].position;
-        Vector3 nextWayporint = myWaypoints[nextWaypointIndex].position;
+        Vector3 currentWaypoint = myWaypoints[currentWaypointIndex];
+        Vector3 nextWayporint = myWaypoints[nextWaypointIndex];
 
         float distanceToNextWaypoint = Vector3.Distance(transform.position, nextWayporint);
         float distanceToBeetwenPoints = Vector3.Distance(currentWaypoint, nextWayporint);
@@ -160,9 +188,9 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void CollectTotalDistance()
     {
-        for (int i = 0; i < myWaypoints.Count - 1; i++)
+        for (int i = 0; i < myWaypoints.Length - 1; i++)
         {
-            float distance = Vector3.Distance(myWaypoints[i].position, myWaypoints[i + 1].position);
+            float distance = Vector3.Distance(myWaypoints[i], myWaypoints[i + 1]);
             totalDistance += distance;
         }
     }
@@ -182,20 +210,20 @@ public class Enemy : MonoBehaviour, IDamagable
 
     protected Vector3 GetFinalWaypoint()
     {
-        if (myWaypoints.Count == 0)
+        if (myWaypoints.Length == 0)
             return transform.position;
-        return myWaypoints[myWaypoints.Count - 1].position;
+        return myWaypoints[myWaypoints.Length - 1];
     }
 
     private Vector3 GetNextWaypoint()
     {
-        if (nextWaypointIndex >= myWaypoints.Count)
+        if (nextWaypointIndex >= myWaypoints.Length)
             return transform.position;
-        Vector3 targertPoint = myWaypoints[nextWaypointIndex].position;
+        Vector3 targertPoint = myWaypoints[nextWaypointIndex];
 
         if (nextWaypointIndex > 0)
         {
-            float distance = Vector3.Distance(myWaypoints[nextWaypointIndex].position, myWaypoints[nextWaypointIndex - 1].position);
+            float distance = Vector3.Distance(myWaypoints[nextWaypointIndex], myWaypoints[nextWaypointIndex - 1]);
             totalDistance -= distance;
         }
 
@@ -211,9 +239,9 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public virtual void TakeDame(float damage)
     {
-        healthPoint = healthPoint - damage;
+        currentHp = currentHp - damage;
 
-        if (healthPoint <= 0 && isDead == false)
+        if (currentHp <= 0 && isDead == false)
         {
             isDead = true;
             Die();
@@ -223,15 +251,27 @@ public class Enemy : MonoBehaviour, IDamagable
     public virtual void Die()
     {
         gameManager.UpdateCurrency(1);
-        DestroyEnemy();
+        RemoveEnemy();
     }
 
-    public virtual void DestroyEnemy()
+    public virtual void RemoveEnemy()
     {
         visuals.CreateOnDeadFx();
-        Destroy(gameObject);
+        objectPool.Remove(gameObject);
+        agent.enabled = false;
 
         if (myPortal != null)
             myPortal.RemoveActiveEnemy(gameObject);
+    }
+
+    protected virtual void OnEnable()
+    {
+        
+    }
+
+    protected virtual void OnDisable()
+    {
+        StopAllCoroutines();
+        CancelInvoke();
     }
 }

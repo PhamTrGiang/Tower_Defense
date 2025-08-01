@@ -12,10 +12,38 @@ public class EnemySwarmVisuals : EnemyVisuals
     [SerializeField] private float maxHeight;
     private float bounceTimer;
 
+    [Space]
+    [SerializeField] private TrailRenderer myTrail;
+
     protected override void Awake()
     {
         ChooseVisualVariant();
         base.Awake();
+
+        myTrail = GetComponentInChildren<TrailRenderer>();
+        myTrail.gameObject.SetActive(false);
+    }
+
+    public void EnableTrail()
+    {
+        if (myTrail == null)
+            return;
+
+        myTrail.Clear();
+        myTrail.gameObject.SetActive(true);
+        myTrail.transform.parent = visuals.transform;
+        myTrail.transform.localPosition = Vector3.zero;
+    }
+
+    private void OnEnable()
+    {
+        EnableTrail();
+    }
+
+    private void OnDisable()
+    {
+        if (myTrail != null)
+            myTrail.gameObject.SetActive(false);
     }
 
     protected override void Start()

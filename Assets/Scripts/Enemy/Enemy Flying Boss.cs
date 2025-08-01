@@ -6,14 +6,16 @@ public class EnemyFlyingBoss : EnemyFlying
     [Header("Boss Details")]
     [SerializeField] private GameObject bossUnitPrefab;
     [SerializeField] private int amountToCreate = 150;
+    private int unitsCreated;
     [SerializeField] private float cooldown = .05f;
     private float creationTimer;
 
     private List<Enemy> createEnemies = new List<Enemy>();
 
-    protected override void Start()
+    protected override void OnEnable()
     {
-        
+        base.OnEnable();
+        unitsCreated = 0;
     }
 
     protected override void Update()
@@ -22,7 +24,7 @@ public class EnemyFlyingBoss : EnemyFlying
 
         creationTimer -= Time.deltaTime;
 
-        if (creationTimer < 0 && amountToCreate > 0)
+        if (creationTimer < 0 && unitsCreated < amountToCreate)
         {
             creationTimer = cooldown;
             CreateNewBossUnit();
@@ -31,8 +33,8 @@ public class EnemyFlyingBoss : EnemyFlying
 
     private void CreateNewBossUnit()
     {
-        amountToCreate--;
-        GameObject newUnit = Instantiate(bossUnitPrefab, transform.position, Quaternion.identity);
+        unitsCreated++;
+        GameObject newUnit = objectPool.Get(bossUnitPrefab, transform.position, Quaternion.identity);
 
         EnemyBossUnit bossUnit = newUnit.GetComponent<EnemyBossUnit>();
         bossUnit.SetupEnemy(GetFinalWaypoint(),this,myPortal);

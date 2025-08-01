@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyVisuals : MonoBehaviour
 {
+    private ObjectPoolManager objectPool;
+
     [SerializeField] private GameObject onDeadFx;
     [SerializeField] private float onDeadFxScale = .5f;
     [Space]
@@ -22,6 +24,7 @@ public class EnemyVisuals : MonoBehaviour
 
     protected virtual void Start()
     {
+        objectPool = ObjectPoolManager.Instance;
     }
 
     protected virtual void Update()
@@ -37,7 +40,7 @@ public class EnemyVisuals : MonoBehaviour
 
     public void CreateOnDeadFx()
     {
-        GameObject newDeadVFX = Instantiate(onDeadFx, transform.position + new Vector3(0, .15f), Quaternion.identity);
+        GameObject newDeadVFX = objectPool.Get(onDeadFx, transform.position + new Vector3(0, .15f), Quaternion.identity);
         newDeadVFX.transform.localScale = new Vector3(onDeadFxScale, onDeadFxScale, onDeadFxScale);
     }
 

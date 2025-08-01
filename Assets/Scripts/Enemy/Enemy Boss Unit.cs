@@ -16,12 +16,23 @@ public class EnemyBossUnit : Enemy
 
     public void SetupEnemy(Vector3 destination, EnemyFlyingBoss myNewBoss, EnemyPortal myNewPortal)
     {
-        myBoss = myNewBoss;
+        ResetEnemy();
+        ResetMovementEnemy();
 
+        myBoss = myNewBoss;
         myPortal = myNewPortal;
         myPortal.GetActiveEnemies().Add(gameObject);
 
         savedDestination = destination;
+
+        InvokeRepeating(nameof(SpapToBossIfNeeded), .1f, .5f);
+    }
+
+    private void ResetMovementEnemy()
+    {
+        rb.useGravity = true;
+        rb.isKinematic = false;
+        agent.enabled = false;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,14 +40,28 @@ public class EnemyBossUnit : Enemy
         if (collision.collider.tag == "Enemy")
             return;
 
-        if (Vector3.Distance(transform.position, lastKnowBossPosition) > 3)
-            transform.position = lastKnowBossPosition + new Vector3(0, -1, 0);
-
-
         rb.useGravity = false;
         rb.isKinematic = true;
 
         agent.enabled = true;
         agent.SetDestination(savedDestination);
+    }
+
+    private void SpapToBossIfNeeded()
+    {
+        if (agent.enabled && agent.isOnNavMesh == false)
+        {
+
+            if (Vector3.Distance(transform.position, lastKnowBossPosition) > 3)
+            {
+                transform.position = lastKnowBossPosition + new Vector3(0, -1, 0);
+                ResetMovementEnemy();
+            }
+        }
+    }
+
+    public override float DistanceAToFinishLine()
+    {
+        return Vector3.Distance(transform.position, GetFinalWaypoint());
     }
 }

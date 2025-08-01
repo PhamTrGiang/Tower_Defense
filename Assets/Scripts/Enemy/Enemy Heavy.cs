@@ -3,31 +3,33 @@ using UnityEngine;
 public class EnemyHeavy : Enemy
 {
     [Header("Enemy Details")]
-    [SerializeField] private float shieldAmount = 50;
+    [SerializeField] private float maxShield = 50;
+    [SerializeField] private float currentShield = 50;
     [SerializeField] private EnemyShield shieldObject;
 
-
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
+
+        currentShield = maxShield;
         EnableShieldIfNeeded();
     }
 
     private void EnableShieldIfNeeded()
     {
-        if (shieldObject != null && shieldAmount > 0)
+        if (shieldObject != null && currentShield > 0)
             shieldObject.gameObject.SetActive(true);
 
     }
 
     public override void TakeDame(float damage)
     {
-        if (shieldAmount > 0)
+        if (currentShield > 0)
         {
-            shieldAmount -= damage;
+            currentShield -= damage;
             shieldObject.ActivateShieldImpact();
 
-            if (shieldAmount <= 0)
+            if (currentShield <= 0)
                 shieldObject.gameObject.SetActive(false);
         }
         else

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemySpiderEMP : MonoBehaviour
 {
+    private ObjectPoolManager objectPool;
+
     [SerializeField] private GameObject empFx;
     [SerializeField] private float moveSpeed = 1;
     [SerializeField] private float empRadius = 2;
@@ -10,6 +12,11 @@ public class EnemySpiderEMP : MonoBehaviour
     private Vector3 destination;
     private float shrinkSpeed = 3;
     private bool shouldShrink;
+
+    private void Awake()
+    {
+        objectPool = ObjectPoolManager.Instance;
+    }
 
     private void Update()
     {
@@ -25,7 +32,7 @@ public class EnemySpiderEMP : MonoBehaviour
         transform.localScale -= Vector3.one * shrinkSpeed * Time.deltaTime;
 
         if (transform.localScale.x <= .01f)
-            Destroy(gameObject);
+            objectPool.Remove(gameObject);
     }
 
     private void MoveTowardsTarget()
@@ -51,7 +58,7 @@ public class EnemySpiderEMP : MonoBehaviour
         Tower tower = other.GetComponent<Tower>();
 
         if (tower != null)
-            tower.DeactivateTower(empEffectDuration,empFx);
+            tower.DeactivateTower(empEffectDuration, empFx);
     }
 
     void OnDrawGizmos()

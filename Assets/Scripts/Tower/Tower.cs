@@ -56,7 +56,7 @@ public abstract class Tower : MonoBehaviour
         HandleRotation();
 
         if (CanAttack())
-            Attack();
+            AttemptToAttack();
     }
 
     public void DeactivateTower(float duration, GameObject empFxPrefab)
@@ -107,6 +107,17 @@ public abstract class Tower : MonoBehaviour
             lastTimeCheckedTarget = Time.time;
             currentEnemy = FindEnemyWithinRange();
         }
+    }
+
+    protected void AttemptToAttack()
+    {
+        if (currentEnemy.gameObject.activeSelf == false)
+        {
+            currentEnemy = null;
+            return;
+        }
+
+        Attack();
     }
 
     protected virtual void Attack()

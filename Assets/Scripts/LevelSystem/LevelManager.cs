@@ -107,7 +107,7 @@ public class LevelManager : MonoBehaviour
 
         foreach (Enemy enemy in enemies)
         {
-            enemy.DestroyEnemy();
+            enemy.RemoveEnemy();
         }
     }
 
