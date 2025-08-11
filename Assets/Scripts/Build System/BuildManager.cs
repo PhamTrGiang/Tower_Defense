@@ -30,7 +30,6 @@ public class BuildManager : MonoBehaviour
         ui = FindFirstObjectByType<UI>();
         cameraEffects = FindFirstObjectByType<CameraEffects>();
 
-        MakeBuildSlotNotAvalibleIfNeeded(waveManager, currentGrid);
     }
 
     private void Start()
@@ -38,7 +37,34 @@ public class BuildManager : MonoBehaviour
         gameManager = GameManager.Instance;
     }
 
-    public void BuildTower(GameObject towerToBuild, int towerPrice,Transform newPreviewTower)
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+            CancelBuildAction();
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (isMouseOverUI)
+                return;
+
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, ~whatToIgnore))
+            {
+                bool clickNotOnBuildSlot = hit.collider.GetComponent<BuildSlot>() == null;
+
+                if (clickNotOnBuildSlot)
+                    CancelBuildAction();
+            }
+        }
+    }
+
+    public void UpdateBuildManager(WaveManager waveManager,GridBuilder newCurrentGrid)
+    {
+        currentGrid = newCurrentGrid;
+        MakeBuildSlotNotAvalibleIfNeeded(waveManager, currentGrid);
+
+    }
+
+    public void BuildTower(GameObject towerToBuild, int towerPrice, Transform newPreviewTower)
     {
         if (gameManager.HasEnoughtCurrency(towerPrice) == false)
         {
@@ -69,26 +95,6 @@ public class BuildManager : MonoBehaviour
         newTower.transform.rotation = previewTower.rotation;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-            CancelBuildAction();
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            if (isMouseOverUI)
-                return;
-
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, ~whatToIgnore))
-            {
-                bool clickNotOnBuildSlot = hit.collider.GetComponent<BuildSlot>() == null;
-
-                if (clickNotOnBuildSlot)
-                    CancelBuildAction();
-            }
-        }
-    }
-
     public void MouseOverUI(bool isOverUI) => isMouseOverUI = isOverUI;
 
     public void MakeBuildSlotNotAvalibleIfNeeded(WaveManager waveManager, GridBuilder currentGrid)
@@ -109,7 +115,7 @@ public class BuildManager : MonoBehaviour
                 TileSlot netxTile = nextWaveGrid[i].GetComponent<TileSlot>();
 
                 bool tileNotTheSame = currentTile.GetMesh() != netxTile.GetMesh() ||
-                                currentTile.GetMaterial() != netxTile.GetMaterial() ||
+                                currentTile.GetOriginalMaterial() != netxTile.GetOriginalMaterial() ||
                                 currentTile.GetAllChildren().Count != netxTile.GetAllChildren().Count;
 
                 if (tileNotTheSame == false)

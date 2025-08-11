@@ -33,6 +33,14 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void StopMakingEnemies()
+    {
+        EnemyPortal[] portals = FindObjectsByType<EnemyPortal>(FindObjectsSortMode.None);
+
+        foreach (var portal in portals)
+            portal.CanCreateNewEnemies(false);
+    }
+
     private void Start()
     {
         Application.targetFrameRate = 60;

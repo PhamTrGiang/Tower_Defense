@@ -5,11 +5,21 @@ using UnityEngine;
 
 public class TileSlot : MonoBehaviour
 {
+    private int originalLayerIndex;
+    private Material originalMaterial;
+
     private MeshRenderer meshRenderer => GetComponent<MeshRenderer>();
     private MeshFilter meshFilter => GetComponent<MeshFilter>();
     private Collider myCollider => GetComponent<Collider>();
     private NavMeshSurface myNavMesh => GetComponentInParent<NavMeshSurface>(true);
     private TileSetHolder tileSetHolder => GetComponentInParent<TileSetHolder>(true);
+
+    private void Awake()
+    {
+        originalLayerIndex = gameObject.layer;
+        originalMaterial = GetComponent<MeshRenderer>().sharedMaterial;
+
+    }
 
     public void SwitchTile(GameObject referenceTile)
     {
@@ -30,7 +40,13 @@ public class TileSlot : MonoBehaviour
 
     private void UpdateNavMesh() => myNavMesh.BuildNavMesh();
 
+    public Material GetOriginalMaterial()
+    {
+        if (originalMaterial == null)
+            originalMaterial = GetComponent<MeshRenderer>().sharedMaterial;
 
+        return originalMaterial;
+    }
     public Material GetMaterial() => meshRenderer.sharedMaterial;
     public Mesh GetMesh() => meshFilter.sharedMesh;
     public Collider GetCollider() => myCollider;
@@ -99,7 +115,11 @@ public class TileSlot : MonoBehaviour
         }
     }
 
-    public void UpdateLayer(GameObject referenceObj) => gameObject.layer = referenceObj.layer;
+    public void UpdateLayer(GameObject referenceObj)
+    {
+        gameObject.layer = referenceObj.layer;
+        originalLayerIndex = gameObject.layer;
+    }
 
     public void RotateTile(int dir)
     {

@@ -9,11 +9,11 @@ public class EnemyPortal : MonoBehaviour
     [SerializeField] private WaveManager myWaveManager;
     [SerializeField] private float spawnCooldown;
     private float spawnTimer;
+    private bool canCreateEnemies = true;
 
     [Space]
     [SerializeField] private ParticleSystem flyPortalFx;
     private Coroutine flyPortalFxCo;
-
 
     [Space]
     [SerializeField] private List<Waypoint> waypointList;
@@ -30,7 +30,7 @@ public class EnemyPortal : MonoBehaviour
     {
         objectPool = ObjectPoolManager.Instance;
     }
-    
+
 
     private void Update()
     {
@@ -54,6 +54,9 @@ public class EnemyPortal : MonoBehaviour
 
     private void CreateEnemy()
     {
+        if (!canCreateEnemies)
+            return;
+
         GameObject randomEnemy = GetRandomEnemy();
         GameObject newEnemy = objectPool.Get(randomEnemy, transform.position, Quaternion.identity, transform);
 
@@ -61,7 +64,7 @@ public class EnemyPortal : MonoBehaviour
         enemyScript.SetupEnemy(this);
 
         PlaceEnemyAtFlyPortal(newEnemy, enemyScript.GetEnemyType());
-        
+
         activeEnemy.Add(newEnemy);
     }
 
@@ -107,6 +110,7 @@ public class EnemyPortal : MonoBehaviour
     }
 
     public List<GameObject> GetActiveEnemies() => activeEnemy;
+    public void CanCreateNewEnemies(bool canCreate) => canCreateEnemies = canCreate;
 
     [ContextMenu("Collect Waypoint")]
     private void CollectWaypoint()

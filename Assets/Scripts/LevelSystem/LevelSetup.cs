@@ -8,6 +8,7 @@ public class LevelSetup : MonoBehaviour
     private TileAnimator tileAnimator;
     private LevelManager levelManager;
     private GameManager gameManager;
+    private BuildManager buildManager;
 
     [Header("Level Details")]
     [SerializeField] private int levelCurrency = 1000;
@@ -26,6 +27,9 @@ public class LevelSetup : MonoBehaviour
         if (LevelWasLoadedToMainScene())
         {
             DeleteExtraObjects();
+
+            buildManager = FindFirstObjectByType<BuildManager>();
+            buildManager.UpdateBuildManager(myWaveManager,myMainGrid);
 
             levelManager.UpdateCurrentGrid(myMainGrid);
 

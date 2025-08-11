@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &980121866163861215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3232499983808728662}
+  - component: {fileID: 727898864690014075}
+  m_Layer: 0
+  m_Name: ObjectPool Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3232499983808728662
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980121866163861215}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.9428625, y: 0.535113, z: 11.484137}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &727898864690014075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980121866163861215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274d2a2d68c058544a645bce5c314706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPools:
+  - {fileID: 8830376046785545544, guid: c44a3437ddb6d904ab74d6af5e81cea6, type: 3}
+  - {fileID: 677721906389274729, guid: 87f46659fd7491d4099aae9a0e4d5303, type: 3}
+  - {fileID: 6897853361467428029, guid: ac2b7b265cff11e4f929328033ad4ca3, type: 3}
+  - {fileID: 8421505541268894830, guid: 7c9775d979c6d4c428f01c0cdc1c9cf8, type: 3}
+  - {fileID: 8612747058759026315, guid: e53027f5bc9aa1846932fd2f9266d36a, type: 3}
+  - {fileID: 4713306068982466719, guid: 0e53fddb7fe69fd4b99792b213e34756, type: 3}
+  - {fileID: 4730545310755488802, guid: cc9ddbb96fc73b040a0cb4857176b5b7, type: 3}
+  - {fileID: 6495655693320247694, guid: 6e0daf6d19f1e1547bc9d5c950e9b1e0, type: 3}
+  - {fileID: 7841208195956195823, guid: 6be02abc783d35241a9f61b0696ff410, type: 3}
+  projectilePools:
+  - {fileID: 4714415432469264609, guid: cae73230616669b4a8b84a5c85c8aded, type: 3}
+  - {fileID: 8222331084359264202, guid: c43d5ff0b6aef2842b504f88808df9bd, type: 3}
+  - {fileID: 4460119260978363980, guid: 2c9d0de894d91e444b1f4a2ba6be4318, type: 3}
+  - {fileID: 4958920976250901867, guid: 393d2832da8160e4c84180cdee1278ab, type: 3}
+  - {fileID: 4673103442740049700, guid: c24d3cf328733e64a927488178784533, type: 3}
+  vfxPools:
+  - {fileID: 3443313853697774693, guid: c4ab5693fef7c9f448d974083781e62f, type: 3}
+  - {fileID: 5237812334684362971, guid: f75b3bbf1bea0384e8b9c39ef43b8261, type: 3}
+  - {fileID: 5933594424811231592, guid: cfdf46a5a61c5654381084f5356b967a, type: 3}
+  - {fileID: 1715561977817565726, guid: e5a98ea05b726434cbca2138f6fcfc78, type: 3}
+  - {fileID: 8626422666363658843, guid: 0bcac0079b5ff4c458b2d1946ad63109, type: 3}
+  - {fileID: 2839038868251882465, guid: 4addeaa0197bdf142a392e86f470e04b, type: 3}
+  defaultPoolSize: 50
+  maxPoolSize: 500

@@ -250,7 +250,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public virtual void Die()
     {
-        gameManager.UpdateCurrency(1);
+        gameManager.UpdateCurrency(10);
         RemoveEnemy();
     }
 
